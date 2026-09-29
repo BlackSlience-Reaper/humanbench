@@ -1,0 +1,32 @@
+# 本机路径配置（见 local.example.json）
+local.json
+# 部署配置里有自己的数据库 ID 和域名（见 deploy/wrangler.example.jsonc）
+deploy/wrangler.jsonc
+deploy/.wrangler/
+node_modules/
+__pycache__/
+.DS_Store
+
+# 构建产物（python3 build.py 生成）
+dist/
+deploy/public/index.html
+deploy/public/*/index.html
+deploy/public/_hant/
+
+# 开发过程中的旧版本快照
+*_v[0-9]*.js
+*_v[0-9]*.html
+*_v[0-9]*.py
+
+# 测试截图、日志和一次性输出
+qa/*.png
+qa/*.jpg
+qa/*.txt
+qa/add3/
+qa/theme/
+
+# 复盘写作的内部素材和旧草稿，不公开
+retro/material-part*.md
+retro/retro-zh.md
+retro/site/
+deploy/public/retro/

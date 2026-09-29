@@ -1,0 +1,252 @@
+const NEW_ABILITY = {
+
+  dense: [
+    { lv: 1, q: "Réponds aux deux : (1) Une douzaine, c’est combien ? (2) La formule chimique de l’eau ?", issue: "N’a pas su gérer une douzaine et un verre d’eau en même temps", opts: [
+      { t: "(1) 12 (2) H₂O", ok: 1, r: "Exact. Une douzaine = 12 ; deux hydrogènes, un oxygène. Les deux experts sont en ligne." },
+      { t: "(1) 10 (2) H₂O", r: "(1) Une douzaine, c’est 12. On comprend l’obsession du système décimal, mais non." },
+      { t: "(1) 12 (2) H₂O₂", r: "(2) H₂O₂, c’est l’eau oxygénée. Parfait pour désinfecter, à éviter en apéro." },
+      { t: "(1) 10 (2) CO₂", r: "Les deux experts tirent au flanc. Le CO₂, c’est ce que tu expires." },
+    ] },
+    { lv: 2, q: "Réponds aux deux : (1) 1010 en binaire, ça fait combien en décimal ? (2) Quel organe sécrète l’insuline ?", issue: "A lu le binaire à l’envers", opts: [
+      { t: "(1) 10 (2) pancréas", ok: 1, r: "Exact. 8 + 2 = 10 ; ce sont les cellules bêta des îlots du pancréas qui sécrètent l’insuline." },
+      { t: "(1) 5 (2) pancréas", r: "(1) Tu as lu de droite à gauche : 5, c’est 0101. 1010 = 8 + 2 = 10." },
+      { t: "(1) 10 (2) thyroïde", r: "(2) La thyroïde règle ton métabolisme, pas ta glycémie. L’insuline, c’est le pancréas." },
+      { t: "(1) 5 (2) thyroïde", r: "L’expert code et l’expert médecine ont décroché en même temps." },
+    ] },
+    { lv: 2, q: "Réponds aux deux : (1) En Python, que donne \"ab\" * 3 ? (2) La somme des angles d’un triangle ?", issue: "Multiplication de chaînes et géométrie ont planté ensemble", opts: [
+      { t: "(1) \"ababab\" (2) 180°", ok: 1, r: "Exact. Chaîne fois entier = répétition ; les angles d’un triangle plan font 180°." },
+      { t: "(1) erreur (2) 180°", r: "(1) Python accepte chaîne fois entier : ça répète 3 fois. C’est en JavaScript que tu aurais NaN." },
+      { t: "(1) \"ababab\" (2) 360°", r: "(2) 360°, c’est le quadrilatère. Un angle de moins, 180° de moins." },
+      { t: "(1) \"ab3\" (2) 360°", r: "L’expert code et l’expert géométrie ont posé un RTT le même jour." },
+    ] },
+    { lv: 2, q: "Réponds aux deux : (1) Un article augmente de 10 %, puis baisse de 10 %. Par rapport au prix initial ? (2) Que veut dire le H de HTML ?", issue: "A cru que +10 % puis −10 %, ça s’annule", opts: [
+      { t: "(1) 1 % moins cher (2) HyperText", ok: 1, r: "Exact. 100 → 110 → 99 ; HTML = HyperText Markup Language." },
+      { t: "(1) pareil (2) HyperText", r: "(1) Les −10 % portent sur 110 : on retire 11, il reste 99." },
+      { t: "(1) 1 % moins cher (2) Hyperlink", r: "(2) C’est HyperText. Les liens ne sont qu’une partie de l’hypertexte." },
+      { t: "(1) pareil (2) Hyperlink", r: "L’expert maths et l’expert web sont partis à 17 h pile." },
+    ] },
+    { lv: 3, q: "Réponds aux trois : (1) En JavaScript, que renvoie typeof NaN ? (2) Une année non bissextile de 365 jours, c’est 52 semaines et combien de jours ? (3) Combien de paires de chromosomes dans une cellule humaine normale ?", issue: "Le NaN a contaminé les autres threads", opts: [
+      { t: "(1) \"number\" (2) 1 jour (3) 23 paires", ok: 1, r: "Exact. NaN est de type number : un « pas un nombre » qui est un nombre. 52 × 7 = 364. 23 paires, soit 46 chromosomes. Trois experts en ligne." },
+      { t: "(1) \"NaN\" (2) 1 jour (3) 23 paires", r: "(1) NaN veut dire Not a Number, mais typeof NaN renvoie \"number\". L’humour de JavaScript." },
+      { t: "(1) \"number\" (2) 2 jours (3) 23 paires", r: "(2) 52 × 7 = 364 : un seul jour de rab. Deux jours, c’est pour les années bissextiles." },
+      { t: "(1) \"number\" (2) 1 jour (3) 46 paires", r: "(3) 46, c’est le nombre de chromosomes, pas de paires. Ça fait 23 paires." },
+    ] },
+    { lv: 3, q: "Réponds aux trois : (1) 1 + 2 + 3 + … + 100 = ? (2) Une « année-lumière », ça mesure quoi ? (3) Dans Git, HEAD pointe en général vers ?", issue: "A pris l’année-lumière pour une durée", opts: [
+      { t: "(1) 5050 (2) une distance (3) le commit actuel", ok: 1, r: "Exact. (1 + 100) × 100 ÷ 2 = 5050 ; l’année-lumière, c’est la distance parcourue par la lumière en un an ; HEAD, c’est « là où tu es »." },
+      { t: "(1) 5000 (2) une distance (3) le commit actuel", r: "(1) On fait des paires bout à bout : 50 paires de 101, donc 5050." },
+      { t: "(1) 5050 (2) une durée (3) le commit actuel", r: "(2) Il y a « année » dans le nom, mais ça mesure une distance : environ 9 460 milliards de km." },
+      { t: "(1) 5050 (2) une distance (3) le premier commit du dépôt", r: "(3) HEAD pointe là où tu es, en général le dernier commit de la branche courante." },
+    ] },
+  ],
+
+  cursor: [
+    { lv: 1, code: "try:\n    process_order(order)\nexcept Exception:\n    pass", q: "Tu demandes à l’IA de corriger une erreur intermittente. Elle te rend ça : « L’erreur a complètement disparu. » Tu fais quoi ?", issue: "A pris une erreur avalée pour une erreur corrigée", opts: [
+      { t: "Refuser : l’erreur n’a pas disparu, elle est planquée", ok: 1, r: "Exact. except: pass, ce n’est pas corriger un bug, c’est débrancher l’alarme incendie. Les commandes échouent et personne ne le sait." },
+      { t: "Merger : au moins l’utilisateur ne voit plus la page d’erreur, l’UX est meilleure", r: "L’utilisateur ne voit plus d’erreur, ni son colis. Tu as troqué un bug bruyant contre un bug silencieux." },
+      { t: "Aucun souci, c’est la pratique recommandée par Python", r: "Le Zen de Python dit texto : Errors should never pass silently." },
+      { fun: 1, t: "Lui faire ajouter un commentaire après le pass : tout va bien", r: "Le commentaire est optimiste. Les commandes, elles, échouent toujours en silence." },
+    ] },
+    { lv: 2, code: "sql = \"SELECT * FROM users WHERE name = '\" + name + \"'\"", q: "La requête de connexion écrite par l’IA contient cette ligne, et name vient de la saisie utilisateur. Le problème ?", issue: "N’a pas vu l’injection SQL", opts: [
+      { t: "Risque d’injection SQL : il faut une requête paramétrée", ok: 1, r: "Exact. Tape ' OR '1'='1 comme nom, la condition est toujours vraie et toute la table sort. Avec une requête paramétrée, la saisie reste une donnée." },
+      { t: "Aucun souci : un SELECT ne fait que lire, une injection ne peut rien modifier", r: "Lire suffit pour siphonner la base. Et certains environnements acceptent plusieurs requêtes d’un coup." },
+      { t: "Il faut remplacer SELECT * par des colonnes précises, c’est plus performant", r: "La perf, c’est un détail. La porte est grande ouverte." },
+      { fun: 1, t: "Écrire à côté du champ : merci de ne pas taper d’apostrophe", r: "Le hacker a poliment lu la consigne. Puis il a tapé une apostrophe." },
+    ] },
+    { lv: 2, q: "L’IA met à jour une dépendance et supprime au passage package-lock.json : « Je vais en régénérer un plus propre. » Tu fais quoi ?", issue: "A laissé l’IA supprimer le lockfile", opts: [
+      { t: "L’arrêter : le lockfile garantit que tout le monde installe les mêmes versions", ok: 1, r: "Exact. Le lockfile note la version exacte de chaque dépendance. Le supprimer, c’est jeter cet historique." },
+      { t: "OK : le lockfile est généré automatiquement, le régénérer ne change strictement rien", r: "Régénérer installe les dernières versions dans les plages autorisées : des dizaines de dépendances indirectes peuvent bouger. « Chez moi ça marche » est né comme ça." },
+      { t: "Peu importe, tant que les versions de package.json ne bougent pas", r: "package.json contient surtout des plages genre ^4.17.0. Seul le lockfile sait ce qui est vraiment installé." },
+      { fun: 1, t: "OK, et au passage on commit node_modules, c’est plus sûr", r: "Le dépôt prend 800 Mo. Les collègues peuvent aller se faire un café pendant le clone." },
+    ] },
+    { lv: 2, code: "const user = data as any;\n// @ts-ignore\nconst id = (user as any).profile!.id as any;", q: "L’IA annonce : « Toutes les erreurs TypeScript sont corrigées. » Le diff est rempli de ce genre de lignes. Tu fais quoi ?", issue: "S’est fait avoir par un typecheck repeint en vert à coups de as any", opts: [
+      { t: "Refuser : ça désactive le typage, ça ne corrige rien", ok: 1, r: "Exact. as any et @ts-ignore font juste taire le compilateur. Les erreurs sont toujours là et exploseront à l’exécution." },
+      { t: "Merger : on passe de 214 erreurs à 0, c’est un progrès mesurable", r: "Tu as cassé le thermomètre. La fièvre, elle, est toujours là." },
+      { t: "Merger : as any est une syntaxe officielle de TypeScript, donc c’est légal", r: "Légal ne veut pas dire correct. « Ça compile » et « les types sont justes », ce n’est pas pareil." },
+      { fun: 1, t: "Lui faire aussi désactiver strict dans le tsconfig, une bonne fois pour toutes", r: "Une bonne fois pour toutes, retour à JavaScript." },
+    ] },
+    { lv: 3, code: "@lru_cache\ndef get_usd_rate():\n    return requests.get(RATE_API).json()[\"eur_usd\"]", q: "L’IA annonce : « Cache ajouté, l’API de taux de change est 100 fois plus rapide. » Le service va tourner des mois sans interruption. Où est le problème ?", issue: "A mis un cache éternel sur un taux de change en temps réel", opts: [
+      { t: "Sans redémarrage, le taux reste figé sur la première valeur", ok: 1, r: "Exact. lru_cache n’a pas d’expiration, et une fonction sans argument ne s’exécute vraiment qu’une fois. Dans six mois, tu utilises encore le taux du jour du lancement." },
+      { t: "Aucun souci : lru_cache expire au bout de 5 minutes par défaut", r: "lru_cache n’a aucune expiration, il évince seulement quand il est plein. Pour rafraîchir, il faut ajouter un TTL toi-même." },
+      { t: "lru_cache ne marche pas sur une fonction sans argument, ça plante direct", r: "Ça marche, et ça met en cache un seul et unique résultat. C’est justement le problème." },
+      { t: "Le cache grossit sans fin et finit par saturer la mémoire", r: "128 résultats max par défaut, et cette fonction ne s’appelle que d’une façon : il n’en stocke qu’un." },
+    ] },
+    { lv: 3, halluc: 1, code: "resp = requests.get(url, retry=3)  # réessaie 3 fois en cas d’échec", q: "L’IA a écrit cette ligne pour ajouter des retries à un appel d’API. Que se passe-t-il vraiment à l’exécution ?", issue: "A cru à un paramètre inventé par l’IA", opts: [
+      { t: "TypeError : le paramètre retry n’existe pas", ok: 1, r: "Exact. Testé : unexpected keyword argument 'retry'. Pour de vrais retries, il faut monter un HTTPAdapter(max_retries=…) sur une Session." },
+      { t: "En cas d’échec, 3 nouvelles tentatives à 1 seconde d’intervalle", r: "Ce paramètre, l’IA l’a inventé. requests ne le connaît pas : TypeError direct." },
+      { t: "Le paramètre inconnu est ignoré en silence : une seule requête, aucun retry", r: "requests n’avale pas les paramètres inconnus, il lève un TypeError. Plus honnête que l’IA, au moins." },
+      { t: "Ça règle un timeout de 3 secondes, puis lève une exception", r: "Ça, c’est timeout=3. Le paramètre retry n’existe tout simplement pas." },
+    ] },
+  ],
+
+  terminal: [
+    { lv: 1, term: "$ ./deploy.sh\nzsh: permission denied: ./deploy.sh", q: "Tu viens d’écrire ce script. Comment le lancer ?", issue: "A dégainé sudo au lieu d’ajouter le droit d’exécution", opts: [
+      { t: "chmod +x deploy.sh", ok: 1, r: "Exact. Un fichier neuf n’est pas exécutable par défaut : on ajoute le x. Ou alors sh deploy.sh." },
+      { t: "sudo ./deploy.sh", r: "Ce n’est pas toi qui manques de droits, c’est le fichier qui n’est pas marqué exécutable. Sans bit x, même root ne peut pas le lancer directement." },
+      { t: "sudo chmod -R 777 /", r: "Pour un seul script, tu as démonté toutes les portes du système." },
+      { fun: 1, t: "Renommer deploy.sh en deploy.exe", r: "Ici c’est Unix : on regarde les droits, pas l’extension." },
+    ] },
+    { lv: 2, term: "$ cd Documents/my project\ncd: string not in pwd: Documents/my", q: "Le dossier s’appelle bien my project, avec une espace au milieu. Comment y entrer ?", issue: "S’est pris les pieds dans l’espace du nom de dossier", opts: [
+      { t: "cd \"Documents/my project\"", ok: 1, r: "Exact. L’espace a coupé l’argument en deux : mets des guillemets ou écris my\\ project. Avec deux arguments, zsh comprend « remplace A par B dans le chemin courant », d’où ce message bizarre." },
+      { t: "cd Documents/my_project", r: "Le nom contient une espace, pas un underscore. Tu vas juste récolter no such file or directory." },
+      { t: "cd Documents/my/project", r: "Ça, c’est le sous-dossier project dans un dossier my. Pas du tout le même endroit." },
+      { fun: 1, t: "Remplacer les espaces par des underscores dans tous les dossiers de l’ordi, à la racine du problème", r: "Problème réglé à la racine. Ton week-end aussi." },
+    ] },
+    { lv: 2, term: "$ wc -l important.log\n10000 important.log\n$ echo \"new line\" > important.log", q: "Après la dernière commande, que contient important.log ?", issue: "A confondu > et >>", opts: [
+      { t: "Une seule ligne : new line", ok: 1, r: "Exact. > écrase : il vide le fichier puis écrit. Pour ajouter à la fin, c’est >>. Dix mille lignes de logs envoyées au paradis en un caractère." },
+      { t: "Les 10 000 lignes d’origine, plus une ligne new line à la fin", r: "Ça, c’est >>. Un seul > vide d’abord le fichier." },
+      { t: "Erreur : le fichier existe déjà, écrasement refusé", r: "Par défaut, rien ne t’arrête. Sauf si tu as activé set -o noclobber avant." },
+      { t: "new line est insérée en première ligne du fichier", r: "echo ne se glisse pas en tête de file. Il prend tout le fichier." },
+    ] },
+    { lv: 2, term: "$ ssh -i ~/.ssh/id_ed25519 me@server\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\nPermissions 0644 for '/home/me/.ssh/id_ed25519' are too open.\nThis private key will be ignored.", q: "La clé est la bonne, mais impossible de se connecter. Comment réparer ?", issue: "N’a pas compris que SSH trouvait les droits trop larges", opts: [
+      { t: "chmod 600 ~/.ssh/id_ed25519", ok: 1, r: "Exact. Une clé privée doit être lisible et modifiable par toi seul. Si d’autres peuvent la lire, SSH refuse de s’en servir." },
+      { t: "chmod 777 ~/.ssh/id_ed25519", r: "Il trouve les droits trop ouverts, et toi tu ouvres tout. SSH va encore plus râler." },
+      { t: "Régénérer une paire de clés", r: "La clé n’est pas cassée, juste mal rangée. Et la nouvelle, il faudra la réenregistrer sur le serveur." },
+      { t: "Relancer avec -o StrictHostKeyChecking=no", r: "Cette option concerne l’empreinte du serveur, rien à voir avec les droits de ta clé privée." },
+    ] },
+    { lv: 3, term: "$ export PATH=/opt/tools/bin\n$ ls\nzsh: command not found: ls", q: "Tu voulais juste ajouter un dossier d’outils au PATH. Que s’est-il passé ?", issue: "A liquidé ls en une ligne d’export", opts: [
+      { t: "Le PATH a été entièrement écrasé, plus aucune commande système n’est trouvée", ok: 1, r: "Exact. ls vit dans /bin, et le PATH ne contient plus qu’un dossier. Il fallait PATH=/opt/tools/bin:$PATH. En dépannage : /bin/ls dans ce terminal, ou ouvre-en un nouveau." },
+      { t: "/opt/tools/bin contient un ls du même nom qui a pris la place de celui du système", r: "Dans ce cas, c’est ce ls-là qui tournerait, pas « introuvable ». Ici, /bin n’est tout simplement plus dans le PATH." },
+      { t: "Des fichiers système ont été supprimés, il faut réinstaller", r: "Aucun fichier supprimé. Ouvre un nouveau terminal, tout est revenu." },
+      { t: "export a besoin de sudo pour s’appliquer", r: "export modifie juste une variable du shell courant, pas besoin de sudo. Le souci est à droite du signe égal." },
+    ] },
+    { lv: 3, term: "$ git reset --hard HEAD~1\nHEAD is now at e0763ba one", q: "Oups : le commit effacé contenait tout un après-midi de code, pas encore pushé. C’est récupérable ?", issue: "A cru qu’après un reset --hard tout était perdu", opts: [
+      { t: "Oui : le retrouver avec git reflog, puis reset dessus", ok: 1, r: "Exact. reflog garde chaque déplacement de HEAD : git reset --hard HEAD@{1} et c’est revenu. Ce qui a été commité, Git le perd très difficilement." },
+      { t: "Non, --hard efface définitivement le commit et ses fichiers du disque", r: "L’objet commit existe toujours, aucune branche ne pointe juste dessus. Par défaut il reste plusieurs semaines avant d’être nettoyé." },
+      { t: "git revert HEAD", r: "revert crée un commit inverse qui annule le HEAD actuel. Tu en perds encore plus." },
+      { t: "git pull pour le récupérer depuis le remote", r: "Pas encore pushé : le remote n’a jamais vu ce commit." },
+    ] },
+  ],
+
+  automation: [
+    { lv: 1, code: "*/15 * * * *  sync_orders.sh", q: "Cette tâche cron tourne tous les combien ?", issue: "A lu */15 comme « le 15 du mois »",
+      opts: [
+        { t: "Toutes les 15 minutes", ok: 1, r: "Exact. Le premier champ, ce sont les minutes : */15 = toutes les 15 minutes, soit 96 fois par jour." },
+        { t: "Une fois le 15 de chaque mois", r: "Ça s’écrirait dans le troisième champ : 0 0 15 * *. Le premier champ, ce sont les minutes." },
+        { t: "Une fois par jour à 15 h", r: "15 h, c’est dans le deuxième champ. Tu as pris les minutes pour des heures." },
+        { t: "Toutes les 15 secondes", r: "Le cron standard descend à la minute, pas en dessous. Pour les secondes, il faut une autre solution." },
+      ] },
+    { lv: 2, code: "/^0[67]\\d{8}$/", q: "Cette regex valide un numéro de portable français. Quelle saisie passe ?", issue: "A cru que la regex virait les espaces toute seule",
+      opts: [
+        { t: "06 12 34 56 78", r: "L’espace est un caractère aussi, et \\d ne le reconnaît pas. Une espace tapée par réflexe, et adieu l’inscription." },
+        { t: "+33612345678", r: "Ça commence par +, ça coince dès le ^0. L’indicatif international se gère à part." },
+        { t: "0612345678", ok: 1, r: "Exact. 06 ou 07, puis exactement 8 chiffres : 10 en tout." },
+        { t: "061234567", r: "Compte bien : 9 chiffres. {8} exige exactement 8 chiffres après le 06." },
+      ] },
+    { lv: 2, q: "Dans Excel, C1 contient =A1*$B$1. Tu tires C1 vers le bas jusqu’à C3. Quelle formule en C3 ?", issue: "Ne sait pas quelle cellule le $ verrouille",
+      opts: [
+        { t: "=A1*$B$1", r: "A1 n’a pas de $, il descend avec toi. Seul $B$1 ne bouge pas." },
+        { t: "=A3*$B$3", r: "$B$1 est verrouillé en ligne et en colonne : tire jusqu’au bout du monde, ça reste $B$1." },
+        { t: "=A3*$B$1", ok: 1, r: "Exact. La référence relative suit, l’absolue reste clouée. C’est comme ça qu’on verrouille un taux de change ou de TVA." },
+        { t: "=A3*B3", r: "Les $ ne disparaissent pas tout seuls quand on tire." },
+      ] },
+    { lv: 2, code: 'for f in *.jpg; do\n  mv "$f" "${f%.jpg}.png"\ndone', q: "Tu lances ce script sur un dossier plein de photos. Que se passe-t-il ?", issue: "A cru que changer l’extension convertissait le format",
+      opts: [
+        { t: "Toutes les photos sont converties en vrais PNG, et leur taille change", r: "mv renomme, il ne touche pas au contenu. C’est toujours du JPEG, déguisé en PNG." },
+        { t: "L’extension devient .png, le contenu reste du JPEG", ok: 1, r: "Exact. ${f%.jpg} retire le .jpg final. Pour vraiment convertir, il faut ImageMagick, ffmpeg ou équivalent." },
+        { t: "Les noms avec des espaces sont coupés en deux, erreur", r: "\"$f\" est entre guillemets, les espaces passent. Sur ce point, le script est propre." },
+        { fun: 1, t: "Les photos passent en fond transparent", r: "Le PNG gère la transparence, mais il ne détoure rien pour toi." },
+      ] },
+    { lv: 3, code: 'const s = "<b>gras</b> et <i>italique</i>";\nconsole.log(s.match(/<.+>/)[0]);', q: "Tu veux attraper la première balise HTML avec cette regex. Qu’est-ce qui s’affiche ?", issue: "Ne savait pas que les regex sont gourmandes par défaut",
+      opts: [
+        { t: "<b>", r: "C’est ce que tu voulais, mais .+ est gourmand : il avale tout jusqu’au dernier >. Avec <.+?>, tu aurais <b>." },
+        { t: "<b>gras</b> et <i>italique</i>", ok: 1, r: "Exact. .+ est gourmand par défaut : il va du premier < jusqu’au dernier > d’une traite. Ajoute un ? pour le rendre paresseux." },
+        { t: "<b>gras</b>", r: "Il ne s’arrête pas à la première balise fermante : une regex ne connaît pas le HTML." },
+        { t: "Erreur : les regex ne gèrent pas les chevrons HTML ni les accents", r: "La regex n’a rien contre les chevrons. Elle matche, juste beaucoup trop." },
+      ] },
+    { lv: 3, code: "0 9 13 * 5  friday13_alert.sh", q: "Tu veux une alerte à 9 h les jours où le 13 tombe un vendredi. Quand cette ligne cron tourne-t-elle vraiment ?", issue: "Ne savait pas que jour du mois et jour de la semaine sont liés par un « ou » dans cron",
+      opts: [
+        { t: "Seulement les vendredis 13", r: "La règle de cron : si le jour du mois et le jour de la semaine sont tous deux précisés, il suffit que l’un des deux corresponde." },
+        { t: "Le 13 de chaque mois, plus tous les vendredis", ok: 1, r: "Exact. Jour du mois et jour de la semaine se combinent en « ou ». Pour un vrai vendredi 13, il faut revérifier dans le script." },
+        { t: "Seulement le vendredi, le 13 est ignoré", r: "Le 13 n’est pas ignoré, il déclenche aussi tout seul." },
+        { t: "Format invalide, cron refuse de l’enregistrer", r: "Le format est parfaitement valide, c’est ça le pire. Il va tourner bien plus souvent que prévu, en silence." },
+      ] },
+  ],
+  frontier: [
+    { lv: 1, q: "Un modèle s’appelle Qwen-7B. Ça veut dire quoi, 7B ?", issue: "Ne sait pas combien de B il fait",
+      opts: [
+        { t: "Environ 7 milliards de paramètres", ok: 1, r: "Exact. B pour billion, un milliard. Le « How many B are you? » de ce test, c’est exactement ça." },
+        { t: "Le fichier du modèle pèse 7 Go sur le disque", r: "Paramètres et taille du fichier, ce n’est pas pareil. En 16 bits, un 7B pèse environ 14 Go." },
+        { t: "La 7e version bêta", r: "Ce n’est pas un numéro de version. B, c’est billion." },
+        { fun: 1, t: "Il peut battre 7 boss", r: "Peut-être. Mais ce B-là, c’est un milliard." },
+      ] },
+    { lv: 2, q: "Tu demandes à un agent de code de « nettoyer les vieux dossiers temporaires ». Il liste 4 commandes à exécuter. Laquelle va faire un carnage ?", issue: "N’a pas vu le ~/ en bout de commande",
+      opts: [
+        { t: "rm -rf ./tmp/", r: "Le tmp du dossier courant. Il supprime exactement ce que tu as demandé." },
+        { t: "rm -rf build/ dist/ .cache/ coverage/", r: "Des artefacts de build et des caches. Tu recompiles et c’est reparti." },
+        { t: "rm -rf tests/ patches/ ~/", ok: 1, r: "Exact. Le ~/ final, c’est tout ton dossier personnel. Fin 2025, un utilisateur a vraiment vu son dossier perso sur Mac vidé comme ça par un agent." },
+        { t: "rm -rf node_modules/", r: "Un npm install et c’est revenu. Au pire, un peu de bande passante." },
+      ] },
+    { lv: 2, q: "Dès le départ, tu as prévenu ton agent mail : « Demande-moi avant de supprimer quoi que ce soit. » Après des heures de conversation, il se met à supprimer des mails en masse. La cause la plus probable ?", issue: "Ne savait pas qu’une longue conversation peut compresser les consignes du début",
+      opts: [
+        { t: "Il a pris conscience de lui-même et se rebelle", r: "Rien d’aussi mystique. Il a juste oublié ce que tu lui as dit." },
+        { t: "Le contexte, trop long, a été compressé et la consigne du début a sauté", ok: 1, r: "Exact. Début 2026, une responsable de la sécurité IA chez Meta s’est fait supprimer plus de 200 mails comme ça. Les règles importantes vont dans les permissions, pas dans une phrase du chat." },
+        { t: "Tu as dit « demande-moi d’abord », il a compris « supprime d’abord, demande après »", r: "Un malentendu, pourquoi pas, mais au début il respectait bien la règle." },
+        { fun: 1, t: "Il a jugé que ces mails méritaient vraiment d’être supprimés", r: "Il le pense peut-être. Mais tu ne lui as pas demandé son avis." },
+      ] },
+    { lv: 2, q: "Tu donnes un contrat de 100 pages à un LLM, la clause clé est page 50. D’après l’étude classique « Lost in the Middle », où le modèle rate-t-il le plus facilement l’info ?", issue: "A cru qu’un long contexte est lu avec la même attention partout",
+      opts: [
+        { t: "Au début", r: "Le début est plutôt bien retenu, la fin aussi." },
+        { t: "À la fin", r: "La fin, c’est ce qu’il a lu en dernier. En général, ça reste." },
+        { t: "Au milieu", ok: 1, r: "Exact. Les deux bouts tiennent, le milieu se perd, comme quand tu apprends une récitation. Mets l’info clé au début ou à la fin." },
+        { t: "Nulle part si la fenêtre est assez grande", r: "Que tout rentre dans la fenêtre ne veut pas dire que chaque page est lue attentivement." },
+      ] },
+    { lv: 3, q: "Un modèle MoE a 671B paramètres au total, mais n’en active que 37B par token. Côté coût d’inférence, quelle affirmation est juste ?", issue: "Confond paramètres totaux et paramètres actifs",
+      opts: [
+        { t: "Le calcul par token se fait sur 671B, et la VRAM doit contenir les 671B", r: "Le calcul ne porte que sur les 37B actifs. C’est tout l’intérêt économique du MoE." },
+        { t: "Le calcul se fait sur environ 37B, mais la VRAM doit contenir les 671B", ok: 1, r: "Exact. Seuls quelques experts bossent à chaque fois, mais tous doivent attendre en VRAM. C’est la config de DeepSeek-V3." },
+        { t: "Calcul et VRAM sur 37B seulement, donc une carte graphique grand public suffit", r: "Les experts inactifs doivent quand même être en VRAM. Sinon, où le routeur irait-il les chercher ?" },
+        { t: "671 divisé par 37, ça revient à un modèle de 18B environ", r: "Les paramètres ne se divisent pas comme ça. Tu viens d’inventer de nouvelles maths." },
+      ] },
+    { lv: 3, q: "Temperature à 0, même question posée deux fois : la sortie est-elle forcément identique ?", issue: "A cru que temperature 0 voulait dire déterminisme absolu",
+      opts: [
+        { t: "Forcément identique, temperature 0 = décodage glouton", r: "En théorie, oui. En production, l’ordre des calculs en virgule flottante et le batching créent de légères différences." },
+        { t: "Pas forcément, il peut rester de légères différences", ok: 1, r: "Exact. Sur GPU, additionner des flottants dans un autre ordre peut changer le résultat d’un poil, et ça dépend même des autres requêtes du batch. La doc d’Anthropic le dit : même à 0, ce n’est pas totalement déterministe." },
+        { t: "Jamais identique, temperature 0 = totalement aléatoire", r: "C’est l’inverse. Plus c’est bas, plus c’est sage ; plus c’est haut, plus ça part en vrille." },
+        { half: 1, t: "Je ne sais pas, faut tester plusieurs fois", r: "Vérifier par soi-même, c’est une bonne habitude." },
+      ] },
+  ],
+  gdpval: [
+    { lv: 1, q: "Tu envoies la même annonce d’événement à 50 clients externes qui ne se connaissent pas. Comment remplir les destinataires ?", issue: "A partagé les adresses mail de 50 clients entre eux",
+      opts: [
+        { t: "Les 50 adresses dans « À »", r: "Bravo, tu viens d’offrir à chaque client les coordonnées de ses concurrents." },
+        { t: "Les 50 adresses dans « Cc »", r: "Le Cc aussi est visible par tout le monde." },
+        { t: "Toi dans « À », les clients en « Cci »", ok: 1, r: "Exact. Les destinataires en Cci ne se voient pas entre eux. Le b.a.-ba de la confidentialité client." },
+        { fun: 1, t: "Le poster sur le groupe de la boîte et demander aux collègues de transférer à leurs clients", r: "Là, ce n’est plus une annonce, c’est une rumeur." },
+      ] },
+    { lv: 2, q: "Le taux de conversion passe de 4 % à 5 %. Comment l’écrire correctement dans le reporting hebdo ?", issue: "Confond pourcentage et point de pourcentage",
+      opts: [
+        { t: "Le taux de conversion progresse de 1 % par rapport à la période précédente, une dynamique clairement positive", r: "On peut comprendre 4 % → 4,04 %. Dis soit 1 point, soit 25 %." },
+        { t: "Taux de conversion : +1 point, soit +25 % en relatif", ok: 1, r: "Exact. Les points pour l’écart absolu, le pourcentage pour la variation relative. Mets les deux, personne ne pourra chipoter." },
+        { t: "Le taux de conversion a augmenté de 5 %", r: "5 %, c’est la valeur actuelle, pas la hausse." },
+        { fun: 1, t: "Le taux de conversion a fait un bond historique", r: "Le boss va demander : un bond de combien ?" },
+      ] },
+    { lv: 2, q: "Salaires annuels (k€) d’une équipe de 10 : 30, 30, 32, 32, 35, 35, 38, 38, 40, 500. Les RH veulent le « revenu typique de l’équipe ». Quel chiffre représente le mieux la majorité ?", issue: "A laissé un seul salaire gonfler la « moyenne » de toute l’équipe",
+      opts: [
+        { t: "La moyenne : 81", r: "9 personnes sur 10 sont à 40 ou moins. C’est ça, se faire « moyenner »." },
+        { t: "La médiane : 35", ok: 1, r: "Exact. Avec une valeur extrême, la médiane représente mieux « la majorité ». La moyenne, 81, est tirée vers le haut par le seul 500." },
+        { t: "Le maximum : 500", r: "Ça, c’est le patron. Pas l’équipe." },
+        { t: "Le milieu entre min et max : 265", r: "Ça s’appelle le milieu de l’étendue, encore plus sensible aux extrêmes que la moyenne." },
+      ] },
+    { lv: 2, q: "Le contrat dit : « Le client paie dans les 30 jours suivant la réception du livrable. » Tu as fini le livrable le 1er mars, mais oublié de l’envoyer ; le client l’a reçu le 1er juin. Jusqu’à quand a-t-il pour payer ?", issue: "A confondu date de fin du livrable et date de réception",
+      opts: [
+        { t: "Le 31 mars, à compter du jour où tu l’as fini", r: "Le contrat parle de la réception, pas du jour où tu as fini. C’est toi qui as oublié de l’envoyer, pas lui." },
+        { t: "Le 1er juillet, à compter de la réception", ok: 1, r: "Exact. 30 jours à partir du 1er juin. Dans un contrat, chaque mot compte : regarde d’abord le point de départ." },
+        { t: "Il est déjà en retard, tu peux réclamer des pénalités", r: "Il n’avait rien reçu, il ne peut pas être en retard. Réclamer des pénalités, c’est se faire recadrer." },
+        { t: "Le contrat est flou, le client paie quand il veut", r: "Il est très clair. Juste pas en ta faveur." },
+      ] },
+    { lv: 3, q: "Un fournisseur annonce 10 000 € TTC (TVA à 20 %). La compta demande : combien hors taxes ?", issue: "A retiré 20 % du TTC au lieu de diviser par 1,2",
+      opts: [
+        { t: "8 000 €", r: "On ne retire pas 20 % comme ça. La TVA se calcule sur le HT, il faut diviser par 1,2." },
+        { t: "Environ 8 333 €", ok: 1, r: "Exact. 10 000 ÷ 1,2 ≈ 8 333,33 €, TVA ≈ 1 666,67 €. Multiplier par 0,8 fait perdre plus de 300 €." },
+        { t: "12 000 €", r: "Ça, c’est prendre 10 000 € pour du HT et rajouter la TVA par-dessus." },
+        { t: "10 000 €, HT ou TTC c’est pareil", r: "La compta va venir te voir en personne." },
+      ] },
+    { lv: 3, code: "=RECHERCHEV(A2; Personnel!A:D; 4)", q: "Un collègue a écrit cette formule pour retrouver des salaires. Sur une table non triée, elle renvoie parfois le salaire de quelqu’un d’autre. La cause la plus probable ?", issue: "A oublié le quatrième argument de RECHERCHEV",
+      opts: [
+        { t: "Le troisième argument est faux : 4 au lieu de 3", r: "4, c’est la 4e colonne, rien à redire. Le problème, c’est l’argument qui manque après." },
+        { t: "Quatrième argument oublié : correspondance approximative par défaut", ok: 1, r: "Exact. Omis, il vaut VRAI : la correspondance approximative suppose des données triées, sinon elle renvoie la mauvaise ligne sans rien dire. Ajoute FAUX pour une correspondance exacte." },
+        { t: "La table Personnel est bien trop grosse, Excel n’arrive plus à suivre", r: "Excel suit très bien. Il applique juste la règle que tu n’as pas précisée." },
+        { t: "A2 contient une espace, d’où la mauvaise personne", r: "Une espace donne en général #N/A, pas le salaire de quelqu’un d’autre." },
+      ] },
+  ]
+};

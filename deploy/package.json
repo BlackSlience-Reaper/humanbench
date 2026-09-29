@@ -1,0 +1,11 @@
+{
+  "name": "humanbench-worker",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "workers-og": "^0.0.25"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

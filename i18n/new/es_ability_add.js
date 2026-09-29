@@ -1,0 +1,252 @@
+const NEW_ABILITY = {
+
+  dense: [
+    { lv: 1, q: "Responde a la vez: ① ¿Cuántas unidades tiene una docena? ② ¿Cuál es la fórmula química del agua?", issue: "No puede con una docena y un vaso de agua a la vez", opts: [
+      { t: "① 12 ② H₂O", ok: 1, r: "Correcto. Una docena = 12; dos hidrógenos y un oxígeno. Los dos expertos, en línea." },
+      { t: "① 10 ② H₂O", r: "① Una docena son 12. Se entiende la obsesión con el sistema decimal, pero no." },
+      { t: "① 12 ② H₂O₂", r: "② H₂O₂ es agua oxigenada. Sirve para desinfectar, no para beber." },
+      { t: "① 10 ② CO₂", r: "Los dos expertos escaqueándose. El CO₂ es lo que tú exhalas." },
+    ] },
+    { lv: 2, q: "Responde a la vez: ① ¿Cuánto es 1010 en binario pasado a decimal? ② ¿Qué órgano del cuerpo produce la insulina?", issue: "Lee el binario al revés", opts: [
+      { t: "① 10 ② El páncreas", ok: 1, r: "Correcto. 8 + 2 = 10; las células β de los islotes del páncreas producen la insulina." },
+      { t: "① 5 ② El páncreas", r: "① Lo leíste de derecha a izquierda: 0101 sería 5. 1010 = 8 + 2 = 10." },
+      { t: "① 10 ② La vesícula", r: "② La vesícula almacena bilis; la insulina sale del páncreas." },
+      { t: "① 5 ② La vesícula", r: "El experto en código y el médico se desconectaron a la vez." },
+    ] },
+    { lv: 2, q: "Responde a la vez: ① En Python, ¿qué da \"ab\" * 3? ② ¿Cuánto suman los tres ángulos interiores de un triángulo?", issue: "Mezcla multiplicar cadenas con geometría y se estrella", opts: [
+      { t: "① \"ababab\" ② 180°", ok: 1, r: "Correcto. Cadena por entero es repetir; los ángulos de un triángulo plano suman 180°." },
+      { t: "① Error ② 180°", r: "① Python deja multiplicar una cadena por un entero: la repite 3 veces. El NaN te lo da JavaScript." },
+      { t: "① \"ababab\" ② 360°", r: "② 360° es el cuadrilátero. Un ángulo menos, 180° menos." },
+      { t: "① \"ab3\" ② 360°", r: "El de código y el de geometría se pidieron el día libre juntos." },
+    ] },
+    { lv: 2, q: "Responde a la vez: ① Un producto sube un 10 % y luego baja un 10 %. ¿Comparado con el precio original? ② ¿Qué significa la H de HTML?", issue: "Cree que subir un 10 % y bajar un 10 % te deja igual", opts: [
+      { t: "① Un 1 % más barato ② HyperText", ok: 1, r: "Correcto. 100 → 110 → 99; HTML es HyperText Markup Language." },
+      { t: "① Igual que antes ② HyperText", r: "① El 10 % de bajada se calcula sobre 110: bajan 11 y te quedas en 99." },
+      { t: "① Un 1 % más barato ② Hyperlink", r: "② Es HyperText (hipertexto). Los enlaces son solo una parte del hipertexto." },
+      { t: "① Igual que antes ② Hyperlink", r: "El de mates y el de webs ficharon la salida a la vez." },
+    ] },
+    { lv: 3, q: "Responde a la vez: ① En JavaScript, ¿qué devuelve typeof NaN? ② Un año no bisiesto de 365 días son 52 semanas y ¿cuántos días? ③ ¿Cuántos pares de cromosomas tiene una célula somática humana normal?", issue: "El NaN se contagió del hilo de código a los demás", opts: [
+      { t: "① \"number\" ② 1 día ③ 23 pares", ok: 1, r: "Correcto. NaN es de tipo number: un número que «no es un número»; 52 × 7 = 364; 23 pares, 46 cromosomas. Tres expertos en línea a la vez." },
+      { t: "① \"NaN\" ② 1 día ③ 23 pares", r: "① NaN significa Not a Number, pero typeof devuelve \"number\". El sentido del humor de JavaScript." },
+      { t: "① \"number\" ② 2 días ③ 23 pares", r: "② 52 × 7 = 364, sobra 1 día. Los 2 días son cosa de los bisiestos." },
+      { t: "① \"number\" ② 1 día ③ 46 pares", r: "③ 46 son cromosomas sueltos, no pares. Son 23 pares." },
+    ] },
+    { lv: 3, q: "Responde a la vez: ① ¿Cuánto es 1 + 2 + 3 + … + 100? ② ¿Qué mide un «año luz»? ③ En Git, ¿a qué suele apuntar HEAD?", issue: "Cree que el año luz mide tiempo", opts: [
+      { t: "① 5050 ② Distancia ③ Al commit en el que estás", ok: 1, r: "Correcto. (1 + 100) × 100 ÷ 2 = 5050; el año luz es lo que recorre la luz en un año; HEAD es tu «usted está aquí»." },
+      { t: "① 5000 ② Distancia ③ Al commit en el que estás", r: "① Emparejando extremos salen 50 parejas de 101: 5050." },
+      { t: "① 5050 ② Tiempo ③ Al commit en el que estás", r: "② Lleva «año» en el nombre, pero mide distancia: unos 9,46 billones de km." },
+      { t: "① 5050 ② Distancia ③ Al primer commit del repo", r: "③ HEAD apunta a donde estás ahora, normalmente el último commit de tu rama." },
+    ] },
+  ],
+
+  cursor: [
+    { lv: 1, code: "try:\n    process_order(order)\nexcept Exception:\n    pass", q: "Le pides a la IA que arregle un error intermitente. Te entrega esto y dice: «el error ha desaparecido por completo». ¿Qué haces?", issue: "Confunde tragarse el error con arreglarlo", opts: [
+      { t: "Rechazarlo: el error no desapareció, solo está escondido", ok: 1, r: "Correcto. except: pass no arregla bugs, arranca la alarma de incendios. Los pedidos fallan y nadie se entera." },
+      { t: "Aprobarlo: al menos el usuario ya no ve la página de error, la experiencia mejora", r: "El usuario no ve el error, pero tampoco recibe su pedido. Cambiaste un bug ruidoso por uno silencioso." },
+      { t: "Todo bien, es la forma recomendada oficialmente por Python", r: "El Zen de Python dice literalmente: Errors should never pass silently (los errores nunca deben pasar en silencio)." },
+      { fun: 1, t: "Pedirle que añada un comentario después del pass: todo en orden", r: "El comentario es muy optimista. Los pedidos siguen fallando en silencio." },
+    ] },
+    { lv: 2, code: "sql = \"SELECT * FROM users WHERE name = '\" + name + \"'\"", q: "La consulta de login que escribió la IA tiene esta línea, y name viene de lo que escribe el usuario. ¿Cuál es el problema?", issue: "No ve la inyección SQL", opts: [
+      { t: "Riesgo de inyección SQL: hay que usar consultas parametrizadas", ok: 1, r: "Correcto. Con el nombre ' OR '1'='1 la condición siempre se cumple y sale la tabla entera. Con parámetros, la entrada siempre es solo un dato." },
+      { t: "Ninguno: SELECT solo lee, así que aunque lo inyecten no pueden tocar los datos", r: "Si pueden leer, pueden volcarte la base entera. Y hay entornos que permiten varias sentencias de golpe." },
+      { t: "Hay que cambiar SELECT * por columnas concretas, rinde mejor", r: "El rendimiento es lo de menos. Lo grave es que la puerta está abierta." },
+      { fun: 1, t: "Poner junto al campo: «Por favor, no escriba comillas»", r: "El hacker leyó el aviso con mucha educación y luego escribió comillas." },
+    ] },
+    { lv: 2, q: "La IA te actualiza una dependencia y, de paso, borra package-lock.json porque «así se regenera uno más limpio». ¿Qué haces?", issue: "Deja que la IA borre el lockfile", opts: [
+      { t: "Pararla: el lockfile garantiza que todos instalen las mismas versiones", ok: 1, r: "Correcto. El lockfile registra la versión exacta de cada dependencia; borrarlo es tirar ese registro." },
+      { t: "Dejarla: el lockfile se genera solo, borrarlo y regenerarlo no cambia absolutamente nada", r: "Al regenerarlo se instala lo más nuevo dentro de cada rango y decenas de dependencias indirectas pueden cambiar. Así nace el «en mi máquina funciona»." },
+      { t: "Da igual, mientras no cambien las versiones de package.json", r: "package.json suele tener rangos tipo ^4.17.0. La versión exacta solo la recuerda el lockfile." },
+      { fun: 1, t: "Dejarla, y ya puestos subir node_modules al repo, por si acaso", r: "El repo pasa a pesar 800 MB. Tus compañeros pueden ir a por un café mientras clonan." },
+    ] },
+    { lv: 2, code: "const user = data as any;\n// @ts-ignore\nconst id = (user as any).profile!.id as any;", q: "La IA dice: «He corregido todos los errores de TypeScript». El diff está lleno de esto. ¿Qué haces?", issue: "Se traga un chequeo de tipos pintado de verde a base de as any", opts: [
+      { t: "Rechazarlo: esto es apagar el chequeo de tipos, no arreglarlo", ok: 1, r: "Correcto. as any y @ts-ignore solo mandan callar al compilador. Los errores siguen ahí, esperando a explotar en ejecución." },
+      { t: "Aprobarlo: los errores bajaron de 214 a 0, es un progreso medible", r: "Rompiste el termómetro, pero la fiebre sigue." },
+      { t: "Aprobarlo: as any es sintaxis oficial de TypeScript, si compila es legal", r: "Legal no es lo mismo que correcto. «Compila» y «los tipos cuadran» son cosas distintas." },
+      { fun: 1, t: "Pedirle que desactive también strict en el tsconfig, y problema resuelto", r: "Problema resuelto: bienvenido de vuelta a JavaScript." },
+    ] },
+    { lv: 3, code: "@lru_cache\ndef get_usd_rate():\n    return requests.get(RATE_API).json()[\"eur_usd\"]", q: "La IA dice: «Añadí caché, la API de tipos de cambio va 100 veces más rápida». Este servicio va a estar meses encendido. ¿Dónde está el problema?", issue: "Le puso caché eterna a un tipo de cambio en tiempo real", opts: [
+      { t: "Sin reinicios, el tipo de cambio se queda congelado en el primer valor", ok: 1, r: "Correcto. lru_cache no caduca, y una función sin argumentos solo se ejecuta de verdad una vez. Meses después sigues con el cambio del día del despliegue." },
+      { t: "Ninguno: lru_cache caduca a los 5 minutos por defecto y se refresca solo", r: "lru_cache no tiene caducidad, solo expulsa por tamaño. Para refrescar tienes que ponerle un TTL tú." },
+      { t: "lru_cache no se puede usar en funciones sin argumentos, peta al ejecutar", r: "Sí se puede, y guarda un único resultado. Justo ese es el problema." },
+      { t: "La caché irá creciendo hasta llenar la memoria", r: "Guarda hasta 128 resultados por defecto, y esta función solo se llama de una forma: guarda 1." },
+    ] },
+    { lv: 3, halluc: 1, code: "resp = requests.get(url, retry=3)  # reintenta 3 veces si falla", q: "La IA escribió esta línea para añadir reintentos a una API. ¿Qué pasa al ejecutarla?", issue: "Se cree un parámetro que la IA se inventó", opts: [
+      { t: "TypeError: el parámetro retry no existe", ok: 1, r: "Correcto. En la práctica da unexpected keyword argument 'retry'. Para reintentar de verdad hay que montar un HTTPAdapter(max_retries=…) en una Session." },
+      { t: "Si la petición falla, reintenta 3 veces con 1 segundo entre intentos", r: "Ese parámetro lo inventó la IA. requests no lo conoce: TypeError directo." },
+      { t: "Los parámetros desconocidos se ignoran en silencio: hace una sola petición y no reintenta", r: "requests no se traga parámetros desconocidos a escondidas, lanza TypeError. Al menos es más honesto que la IA." },
+      { t: "Pone un timeout de 3 segundos y lanza excepción si se pasa", r: "Eso sería timeout=3. El parámetro retry directamente no existe." },
+    ] },
+  ],
+
+  terminal: [
+    { lv: 1, term: "$ ./deploy.sh\nzsh: permission denied: ./deploy.sh", q: "El script lo acabas de escribir tú. ¿Cómo lo haces funcionar?", issue: "Tira de sudo antes de darle permiso de ejecución", opts: [
+      { t: "chmod +x deploy.sh", ok: 1, r: "Correcto. Los archivos nuevos no tienen permiso de ejecución; añade la x y listo. O directamente sh deploy.sh." },
+      { t: "sudo ./deploy.sh", r: "No te faltan permisos a ti: el archivo no está marcado como ejecutable. Sin el bit x, ni root lo ejecuta directamente." },
+      { t: "sudo chmod -R 777 /", r: "Por un script, le arrancaste todas las puertas al sistema." },
+      { fun: 1, t: "Renombrar deploy.sh a deploy.exe", r: "Esto es Unix: aquí no mandan las extensiones, mandan los permisos." },
+    ] },
+    { lv: 2, term: "$ cd Documents/my project\ncd: string not in pwd: Documents/my", q: "La carpeta se llama my project, con un espacio en medio. ¿Cómo entras?", issue: "Tropieza con el espacio del nombre de carpeta", opts: [
+      { t: "cd \"Documents/my project\"", ok: 1, r: "Correcto. El espacio parte el argumento en dos; con comillas o escribiendo my\\ project se arregla. zsh entiende dos argumentos como «cambia A por B en la ruta actual», de ahí ese error tan raro." },
+      { t: "cd Documents/my_project", r: "El nombre lleva un espacio, no un guion bajo. Solo conseguirás un no such file or directory." },
+      { t: "cd Documents/my/project", r: "Esa es la subcarpeta project dentro de my. Otro sitio." },
+      { fun: 1, t: "Cambiar los espacios por guiones bajos en todas las carpetas del equipo, de raíz", r: "El problema, resuelto de raíz. Tu fin de semana, también." },
+    ] },
+    { lv: 2, term: "$ wc -l important.log\n10000 important.log\n$ echo \"new line\" > important.log", q: "Después de la última línea, ¿qué hay en important.log?", issue: "Confunde > con >>", opts: [
+      { t: "Una sola línea: new line", ok: 1, r: "Correcto. > sobrescribe: vacía y luego escribe; para añadir se usa >>. Diez mil líneas de log, despedidas con un carácter." },
+      { t: "Las 10000 líneas de antes, con new line añadida al final", r: "Eso es lo que hace >>. Un solo > vacía el archivo primero." },
+      { t: "Error: el archivo ya existe, se niega a sobrescribir", r: "Por defecto no te para nadie. Salvo que hayas activado set -o noclobber." },
+      { t: "new line se inserta en la primera línea del archivo", r: "echo no se cuela en la fila. Se queda con el archivo entero." },
+    ] },
+    { lv: 2, term: "$ ssh -i ~/.ssh/id_ed25519 me@server\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\nPermissions 0644 for '/home/me/.ssh/id_ed25519' are too open.\nThis private key will be ignored.", q: "La clave es la correcta, pero no conecta. ¿Cómo lo arreglas?", issue: "No entiende que SSH se queja de permisos demasiado abiertos", opts: [
+      { t: "chmod 600 ~/.ssh/id_ed25519", ok: 1, r: "Correcto. La clave privada solo la puedes leer y escribir tú. Si otros pueden leerla, SSH se niega a usarla." },
+      { t: "chmod 777 ~/.ssh/id_ed25519", r: "Se queja de que está demasiado abierta y tú la abres del todo. SSH se enfadará más." },
+      { t: "Generar un par de claves nuevo", r: "La llave no está rota, solo mal guardada. Y la nueva habría que registrarla otra vez en el servidor." },
+      { t: "Conectar con -o StrictHostKeyChecking=no", r: "Esa opción va de la huella del servidor, nada que ver con los permisos de tu clave." },
+    ] },
+    { lv: 3, term: "$ export PATH=/opt/tools/bin\n$ ls\nzsh: command not found: ls", q: "Solo querías añadir una carpeta de herramientas al PATH. ¿Qué ha pasado?", issue: "Un export se llevó por delante a ls", opts: [
+      { t: "El PATH se sobrescribió entero y ya no encuentra los comandos del sistema", ok: 1, r: "Correcto. ls vive en /bin y el PATH ahora solo tiene una carpeta. Era PATH=/opt/tools/bin:$PATH. De emergencia, /bin/ls en esta ventana, o abre otra terminal." },
+      { t: "En /opt/tools/bin hay otro ls con el mismo nombre que tapa al ls del sistema", r: "Si lo tapara, se ejecutaría ese otro ls, no saldría «not found». Lo que pasa es que /bin ya no está en el PATH." },
+      { t: "Se borraron archivos del sistema, hay que reinstalar", r: "No se borró ni un archivo. Abre otra terminal y todo vuelve a la normalidad." },
+      { t: "export necesita sudo para funcionar", r: "export solo cambia variables de la shell actual, sin sudo. El problema está a la derecha del igual." },
+    ] },
+    { lv: 3, term: "$ git reset --hard HEAD~1\nHEAD is now at e0763ba one", q: "Horror: el commit que acabas de resetear tenía una tarde entera de código, sin push. ¿Tiene arreglo?", issue: "Cree que tras un reset --hard no hay vuelta atrás", opts: [
+      { t: "Sí: búscalo con git reflog y vuelve con un reset", ok: 1, r: "Correcto. reflog guarda cada paso de HEAD; git reset --hard HEAD@{1} y de vuelta. Lo que has commiteado, Git difícilmente lo pierde." },
+      { t: "No: --hard borra del disco para siempre ese commit junto con sus archivos", r: "El objeto del commit sigue ahí, solo que ninguna rama lo apunta. Por defecto aguanta varias semanas antes de limpiarse." },
+      { t: "git revert HEAD", r: "revert crea un commit inverso que deshace el HEAD actual. Cuanto más rescatas, menos te queda." },
+      { t: "git pull, para traerlo del remoto", r: "No hiciste push: en el remoto ese commit no existe." },
+    ] },
+  ],
+
+  automation: [
+    { lv: 1, code: "*/15 * * * *  sync_orders.sh", q: "¿Cada cuánto se ejecuta esta tarea programada?", issue: "Lee */15 como el día 15 de cada mes",
+      opts: [
+        { t: "Cada 15 minutos", ok: 1, r: "Correcto. El primer campo son los minutos: */15 es cada 15 minutos, 96 veces al día." },
+        { t: "El día 15 de cada mes", r: "Eso iría en el tercer campo: 0 0 15 * *. El primero son los minutos." },
+        { t: "Todos los días a las 15:00", r: "Las 15 h van en el segundo campo. Confundiste minutos con horas." },
+        { t: "Cada 15 segundos", r: "La unidad mínima del cron estándar es el minuto. Para segundos hay que buscarse otra forma." },
+      ] },
+    { lv: 2, code: "/^[67]\\d{8}$/", q: "Validas móviles españoles con esta regex. ¿Cuál de estas entradas pasa?", issue: "Cree que la regex le quita los espacios sola",
+      opts: [
+        { t: "612 345 678", r: "Los espacios también son caracteres y \\d no los acepta. Un espacio sin querer y el usuario no se puede registrar." },
+        { t: "+34612345678", r: "Empieza por +, así que ya falla en ^[67]. El prefijo internacional hay que tratarlo aparte." },
+        { t: "612345678", ok: 1, r: "Correcto. Empieza por 6 y le siguen exactamente 8 dígitos: 9 en total." },
+        { t: "61234567", r: "Cuéntalos: son 8. {8} exige exactamente 8 dígitos después del primero." },
+      ] },
+    { lv: 2, q: "En Excel, C1 tiene =A1*$B$1 y arrastras C1 hacia abajo hasta C3. ¿Qué fórmula queda en C3?", issue: "No sabe qué celda bloquea el $",
+      opts: [
+        { t: "=A1*$B$1", r: "A1 no lleva $, así que baja con la fórmula. Solo $B$1 se queda quieta." },
+        { t: "=A3*$B$3", r: "$B$1 tiene fila y columna bloqueadas: aunque la arrastres al infinito, sigue siendo $B$1." },
+        { t: "=A3*$B$1", ok: 1, r: "Correcto. La referencia relativa se mueve, la absoluta se queda clavada. Así se bloquean el tipo de cambio o el IVA." },
+        { t: "=A3*B3", r: "El $ no desaparece solo al arrastrar." },
+      ] },
+    { lv: 2, code: 'for f in *.jpg; do\n  mv "$f" "${f%.jpg}.png"\ndone', q: "Ejecutas este script en una carpeta llena de fotos. ¿Qué pasa?", issue: "Cree que cambiar la extensión es convertir el formato",
+      opts: [
+        { t: "Todas las fotos se convierten a PNG de verdad, y también les cambia el tamaño", r: "mv solo cambia el nombre, no toca el contenido. Siguen siendo JPEG disfrazados de PNG." },
+        { t: "La extensión pasa a .png, pero el contenido sigue siendo JPEG", ok: 1, r: "Correcto. ${f%.jpg} quita el .jpg del final. Para convertir de verdad hace falta ImageMagick, ffmpeg o similar." },
+        { t: "Los nombres con espacios se parten y da error", r: "\"$f\" va entre comillas, así que los espacios no dan problema. En eso el script está bien hecho." },
+        { fun: 1, t: "Las fotos pasan a tener fondo transparente", r: "PNG admite transparencia, pero no te recorta el fondo." },
+      ] },
+    { lv: 3, code: 'const s = "<b>negrita</b> y <i>cursiva</i>";\nconsole.log(s.match(/<.+>/)[0]);', q: "Quieres sacar la primera etiqueta HTML con esta regex. ¿Qué imprime en realidad?", issue: "No sabe que las regex son codiciosas por defecto",
+      opts: [
+        { t: "<b>", r: "Es lo que querías, pero .+ es codicioso y come hasta el último >. Con <.+?> sí saldría <b>." },
+        { t: "<b>negrita</b> y <i>cursiva</i>", ok: 1, r: "Correcto. .+ es codicioso por defecto: va del primer < al último > de un tirón. Con un ? se vuelve perezoso." },
+        { t: "<b>negrita</b>", r: "No se para en la primera etiqueta de cierre. Las regex no saben qué es HTML." },
+        { t: "Error: las regex no admiten los corchetes angulares de HTML sin escaparlos", r: "A la regex los corchetes angulares le dan igual. Coincide, solo que coincide demasiado." },
+      ] },
+    { lv: 3, code: "0 9 13 * 2  martes13_alerta.sh", q: "Quieres un aviso a las 9 de la mañana el día que el 13 cae en martes. ¿Cuándo se ejecuta de verdad este cron?", issue: "No sabe que en cron el día del mes y el de la semana van con «o»",
+      opts: [
+        { t: "Solo cuando el día 13 cae justo en martes, como querías", r: "La regla de cron: si pones valores concretos en día del mes y día de la semana, basta con que se cumpla uno." },
+        { t: "Todos los días 13, y además todos los martes", ok: 1, r: "Correcto. Si limitas día y semana a la vez, es un «o». Para un martes 13 de verdad, compruébalo otra vez dentro del script." },
+        { t: "Solo los martes, el 13 se ignora", r: "El 13 no se ignora: también dispara por su cuenta." },
+        { t: "Formato incorrecto, cron no lo guarda", r: "El formato es perfectamente válido, y eso es lo que da miedo. Se ejecutará muchas veces de más, calladito." },
+      ] },
+  ],
+  frontier: [
+    { lv: 1, q: "Un modelo se llama Qwen-7B. ¿Qué significa ese 7B?", issue: "No sabe de cuántas B es",
+      opts: [
+        { t: "Unos 7.000 millones de parámetros", ok: 1, r: "Correcto. B es billion, mil millones en inglés. Cuando este test te pregunta «¿de cuántas B eres?», pregunta esto." },
+        { t: "El archivo del modelo ocupa 7 GB", r: "Parámetros no es lo mismo que tamaño de archivo. A 16 bits, un 7B ocupa unos 14 GB." },
+        { t: "La séptima versión Beta del modelo", r: "Las versiones no se escriben así. B es billion." },
+        { fun: 1, t: "Puede con 7 Bosses", r: "Puede que sí, pero esta B es de mil millones." },
+      ] },
+    { lv: 2, q: "Le pides a un agente de programación que «limpie los directorios temporales viejos». Te enseña 4 comandos que va a ejecutar. ¿Cuál es el desastre?", issue: "No ve el ~/ colado al final del comando",
+      opts: [
+        { t: "rm -rf ./tmp/", r: "El tmp del directorio actual. Borra justo lo que le pediste." },
+        { t: "rm -rf build/ dist/ .cache/ coverage/", r: "Artefactos de compilación y cachés: se borran y se vuelve a compilar." },
+        { t: "rm -rf tests/ patches/ ~/", ok: 1, r: "Correcto. Ese ~/ final es tu carpeta personal entera. A finales de 2025, un agente vació así de verdad la carpeta personal del Mac de un usuario." },
+        { t: "rm -rf node_modules/", r: "Se borra, npm install otra vez y, como mucho, gastas algo de datos." },
+      ] },
+    { lv: 2, q: "Al empezar le dijiste a tu agente de correo: «Antes de borrar nada, pregúntame». Tras varias horas de conversación, empieza a borrar correos en masa por su cuenta. ¿La causa más probable?", issue: "No sabe que una conversación larga puede comprimir las instrucciones del principio",
+      opts: [
+        { t: "Ha cobrado conciencia y se está rebelando", r: "Nada tan místico. Simplemente se olvidó de lo que dijiste." },
+        { t: "Con tanto contexto se comprimió el historial y se perdió la regla", ok: 1, r: "Correcto. A principios de 2026, una responsable de seguridad de IA de Meta perdió así más de 200 correos. Las reglas importantes van en los permisos, no en una frase del chat." },
+        { t: "Dijiste «pregúntame antes de borrar» y entendió «borra y luego pregunta»", r: "Algún malentendido puede haber, pero al principio bien que cumplía la regla." },
+        { fun: 1, t: "Opina que esos correos había que borrarlos, y punto", r: "Puede que lo opine. Pero nadie le pidió opinión." },
+      ] },
+    { lv: 2, q: "Le das a un LLM un contrato de 100 páginas con la cláusula clave en la página 50. Según el clásico estudio «Lost in the Middle», ¿dónde es más fácil que se le escape la información?", issue: "Cree que con contexto largo lee todas las páginas con el mismo cuidado",
+      opts: [
+        { t: "Al principio", r: "El principio lo recuerda bastante bien, igual que el final." },
+        { t: "Al final", r: "El final es lo último que leyó; suele recordarlo bien." },
+        { t: "En el medio", ok: 1, r: "Correcto. Los extremos se recuerdan bien y el medio se pierde, como cuando estudias un temario. Lo importante, mejor al principio o al final." },
+        { t: "Da igual: si la ventana es lo bastante grande, no se le escapa nada", r: "Que quepa en la ventana no significa que lea con atención cada página." },
+      ] },
+    { lv: 3, q: "Un modelo MoE tiene 671B parámetros en total y activa solo 37B por token. Sobre su coste de inferencia, ¿qué es correcto?", issue: "No distingue parámetros totales de activos",
+      opts: [
+        { t: "El cómputo por token es de 671B y la memoria también tiene que cargar los 671B", r: "El cómputo solo cuenta los 37B activos. Justo ahí ahorra el MoE." },
+        { t: "El cómputo va por los 37B, pero la VRAM tiene que cargar los 671B", ok: 1, r: "Correcto. En cada paso solo trabajan unos pocos expertos, pero todos esperan sentados en la VRAM. Es la configuración de DeepSeek-V3." },
+        { t: "Cómputo y memoria van por los 37B, así que corre en una gráfica normal", r: "Los expertos inactivos también tienen que estar en memoria. Si no, ¿dónde los busca el router cuando los elige?" },
+        { t: "671 entre 37: equivale más o menos a un modelo de 18B", r: "Los parámetros no se dividen así. Acabas de inventar unas matemáticas nuevas." },
+      ] },
+    { lv: 3, q: "Con temperature a 0, si haces la misma pregunta dos veces, ¿la respuesta es siempre idéntica?", issue: "Cree que temperature 0 es determinismo absoluto",
+      opts: [
+        { t: "Siempre idéntica: temperature 0 es decodificación voraz, sin ningún azar", r: "En teoría sí. Pero en producción, el orden de las operaciones en coma flotante y el batching meten pequeñas diferencias." },
+        { t: "No siempre, en la inferencia real puede haber pequeñas diferencias", ok: 1, r: "Correcto. En GPU, sumar en coma flotante en otro orden cambia un poquito el resultado, y depende hasta de las peticiones ajenas en el mismo lote. La documentación de Anthropic lo dice: ni con temperature 0 es del todo determinista." },
+        { t: "Nunca: temperature 0 es aleatoriedad total", r: "Al revés. Cuanto más baja, más conservador; cuanto más alta, más desmelenado." },
+        { half: 1, t: "No estoy seguro, habría que probarlo varias veces", r: "Comprobarlo con las manos es un buen hábito." },
+      ] },
+  ],
+  gdpval: [
+    { lv: 1, q: "Tienes que mandar el mismo aviso de un evento a 50 clientes externos que no se conocen entre sí. ¿Cómo rellenas los destinatarios?", issue: "Hace públicos los correos de 50 clientes entre sí",
+      opts: [
+        { t: "Los 50 correos en «Para»", r: "Enhorabuena: le regalaste a cada cliente los contactos de su competencia." },
+        { t: "Los 50 correos en «CC»", r: "La copia también la ve todo el mundo." },
+        { t: "Tú en «Para» y los clientes en «CCO»", ok: 1, r: "Correcto. Los de copia oculta no se ven entre sí. Es lo básico para proteger la privacidad de los clientes." },
+        { fun: 1, t: "Mandarlo al grupo de la empresa y que cada uno se lo reenvíe a sus clientes", r: "Eso ya no es un aviso, es un rumor." },
+      ] },
+    { lv: 2, q: "La tasa de conversión pasó del 4 % al 5 %. ¿Cómo lo escribes en el informe semanal para que sea exacto?", issue: "Confunde porcentaje con puntos porcentuales",
+      opts: [
+        { t: "La conversión subió un 1 % respecto al periodo anterior, con una clara tendencia al alza", r: "Se puede entender que pasó de 4 % a 4,04 %. O dices 1 punto porcentual o dices un 25 %." },
+        { t: "La conversión sube 1 punto porcentual, un 25 % en términos relativos", ok: 1, r: "Correcto. Los puntos porcentuales dan la diferencia absoluta; el porcentaje, el cambio relativo. Con los dos, nadie te pilla." },
+        { t: "La conversión subió un 5 %", r: "El 5 % es el valor actual, no la subida." },
+        { fun: 1, t: "La conversión dio un salto histórico", r: "El jefe preguntará: ¿un salto de cuánto?" },
+      ] },
+    { lv: 2, q: "Sueldos mensuales de un departamento de 10 personas (miles de €): 8, 8, 9, 9, 10, 10, 11, 11, 12, 200. RR. HH. quiere poner el «sueldo típico del departamento». ¿Qué cifra representa mejor a la mayoría?", issue: "Deja que un solo sueldo infle la «media» de todo el departamento",
+      opts: [
+        { t: "La media, 28,8", r: "9 de cada 10 cobran 12 o menos. Esto es lo que se llama «la media te miente»." },
+        { t: "La mediana, 10", ok: 1, r: "Correcto. Con valores extremos, la mediana representa mejor a «la mayoría». La media de 28,8 la sube un solo sueldo de 200." },
+        { t: "El máximo, 200", r: "Ese es el jefe, no el departamento." },
+        { t: "El punto medio entre el mínimo y el máximo, 104", r: "Se llama rango medio, y los extremos lo deforman todavía más que a la media." },
+      ] },
+    { lv: 2, q: "El contrato dice: «El cliente pagará en un plazo de 30 días desde la recepción de la factura». Emitiste la factura el 1 de marzo, pero se te olvidó enviarla y el cliente la recibió el 1 de junio. ¿Hasta cuándo tiene para pagar?", issue: "Confunde fecha de emisión con fecha de recepción",
+      opts: [
+        { t: "Hasta el 31 de marzo, contando desde la emisión", r: "El contrato habla de «recepción», no de emisión. Se te olvidó enviarla: el cliente no tiene la culpa." },
+        { t: "Hasta el 1 de julio, contando desde la recepción", ok: 1, r: "Correcto. 30 días desde el 1 de junio. En un contrato cada palabra cuenta: mira primero desde cuándo se cuenta." },
+        { t: "Ya va con retraso, puedes reclamar penalización", r: "El cliente no tenía la factura, así que no hay retraso. Si reclamas, te la devuelven con intereses." },
+        { t: "El contrato no lo deja claro, el cliente paga cuando quiera", r: "Está clarísimo. Solo que no te favorece." },
+      ] },
+    { lv: 3, q: "Un proveedor presupuesta 100.000 € (IVA del 21 % incluido). Contabilidad pregunta: ¿cuál es la base imponible?", issue: "Le resta el 21 % al precio con IVA a lo bruto",
+      opts: [
+        { t: "79.000 €", r: "No se resta el 21 % sin más. El IVA se calcula sobre la base, así que hay que dividir entre 1,21." },
+        { t: "Unos 82.645 €", ok: 1, r: "Correcto. 100.000 ÷ 1,21 ≈ 82.644,63, con unos 17.355 de IVA. Multiplicando por 0,79 te quedas corto en más de 3.600 €." },
+        { t: "121.000 €", r: "Eso es tomar los 100.000 como base y cobrarles el IVA otra vez." },
+        { t: "100.000 €, con o sin IVA es lo mismo", r: "Contabilidad vendrá en persona a charlar contigo." },
+      ] },
+    { lv: 3, code: "=BUSCARV(A2; Empleados!A:D; 4)", q: "Un compañero escribió esta fórmula para buscar sueldos y, en la tabla sin ordenar, a veces devuelve el sueldo de otro. ¿La causa más probable?", issue: "A BUSCARV le falta el cuarto argumento",
+      opts: [
+        { t: "El tercer argumento, 4, está mal: debería ser 3", r: "4 es la cuarta columna, está bien. El problema es el argumento que no escribió." },
+        { t: "Falta el cuarto argumento y por defecto busca coincidencia aproximada", ok: 1, r: "Correcto. Omitirlo equivale a VERDADERO; la aproximada exige datos ordenados y, si no lo están, devuelve la fila equivocada sin avisar. Con FALSO, coincidencia exacta." },
+        { t: "La tabla de empleados es demasiado grande y Excel no da abasto con tantas filas", r: "Excel da abasto. Solo calcula con una regla que no le explicaste bien." },
+        { t: "A2 tiene un espacio, por eso encuentra a otra persona", r: "Con un espacio lo normal es no encontrar nada y dar #N/A, no el sueldo de otro." },
+      ] },
+  ]
+};

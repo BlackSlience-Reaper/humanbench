@@ -1,0 +1,12 @@
+{
+  // HumanBench 独立站：静态页 + 专属分享预览图（src/worker.js），复制成 wrangler.jsonc 后填上自己的数据库 ID 和域名
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "humanbench",
+  "main": "src/worker.js",
+  "compatibility_date": "2025-01-28",
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
+  "d1_databases": [{ "binding": "DB", "database_name": "humanbench-stats", "database_id": "<你的 D1 数据库 ID：npx wrangler d1 create humanbench-stats>" }],
+  "routes": [{ "pattern": "<你的域名>", "custom_domain": true }],
+  // 主域名在微信里被拦截时改成 "1"：微信用户的分享链接/二维码改用 worker.js 里 ALT_HOSTS 的备用域名
+  "vars": { "WX_ALT": "0" }
+}

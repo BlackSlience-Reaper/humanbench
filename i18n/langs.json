@@ -1,0 +1,105 @@
+{
+ "tw": {
+  "locale": "zh-TW",
+  "html_lang": "zh-Hant",
+  "hero": "你是<br><span class=\"hl\">幾<span class=\"b\">B</span></span>的<br>模型？",
+  "title": "你是幾B的模型？｜HumanBench",
+  "desc": "AI 翻過的車，這次換你來開。測出你的參數量、MoE 還是 Dense、AI 味和模型人格。by @Alex_ybuild",
+  "og_title": "你是幾B的模型？",
+  "fonts": "family=Chiron+GoRound+TC:wght@900&family=Lilita+One&family=Noto+Sans+TC:wght@500;700;900",
+  "fun": "\"Chiron GoRound TC\",\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif",
+  "sans": "\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",system-ui,sans-serif",
+  "id_name": {},
+  "code": "hant",
+  "variant": "tw"
+ },
+ "hk": {
+  "locale": "zh-HK",
+  "html_lang": "zh-HK",
+  "hero": "你是<br><span class=\"hl\">幾<span class=\"b\">B</span></span>的<br>模型？",
+  "title": "你是幾B的模型？｜HumanBench",
+  "desc": "AI 翻過的車，這次換你來開。測出你的參數量、MoE 還是 Dense、AI 味和模型人格。by @Alex_ybuild",
+  "og_title": "你是幾B的模型？",
+  "fonts": "family=Chiron+GoRound+TC:wght@900&family=Lilita+One&family=Noto+Sans+HK:wght@500;700;900",
+  "fun": "\"Chiron GoRound TC\",\"Noto Sans HK\",\"PingFang HK\",\"Microsoft JhengHei\",sans-serif",
+  "sans": "\"Noto Sans HK\",\"PingFang HK\",\"Microsoft JhengHei\",system-ui,sans-serif",
+  "id_name": {},
+  "code": "hant",
+  "variant": "hk"
+ },
+ "en": {
+  "locale": "en-US",
+  "html_lang": "en",
+  "hero": "How<br>many <span class=\"hl\"><span class=\"b\">B</span></span><br>are you?",
+  "title": "How many B are you? · HumanBench",
+  "desc": "You play the model: 76 questions, from famous AI fails to agent tasks. Get your parameter count, launch-day benchmark table and model personality. By @Alex_ybuild",
+  "og_title": "How many B are you?",
+  "fonts": "family=Lilita+One&family=Nunito:wght@600;800;900",
+  "fun": "\"Lilita One\",\"Nunito\",system-ui,sans-serif",
+  "sans": "\"Nunito\",system-ui,-apple-system,\"Segoe UI\",sans-serif",
+  "id_name": {
+   "豆包": "Siri",
+   "GPT-5 系": "GPT-5"
+  }
+ },
+ "ja": {
+  "locale": "ja-JP",
+  "html_lang": "ja",
+  "hero": "あなたは<br><span class=\"hl\">何<span class=\"b\">B</span></span>の<br>モデル？",
+  "title": "あなたは何Bのモデル？｜HumanBench",
+  "desc": "AIがやらかした問題、今度はあなたの番。パラメータ数・MoEかDenseか・AIっぽさ・モデル人格を判定。by @Alex_ybuild",
+  "og_title": "あなたは何Bのモデル？",
+  "fonts": "family=Mochiy+Pop+One&family=Lilita+One&family=Noto+Sans+JP:wght@500;700;900",
+  "fun": "\"Mochiy Pop One\",\"Noto Sans JP\",sans-serif",
+  "sans": "\"Noto Sans JP\",\"Hiragino Sans\",\"Yu Gothic\",system-ui,sans-serif",
+  "id_name": {
+   "豆包": "Siri",
+   "GPT-5 系": "GPT-5"
+  }
+ },
+ "es": {
+  "locale": "es-ES",
+  "html_lang": "es",
+  "hero": "¿De cuántos<br><span class=\"hl\"><span class=\"b\">B</span></span><br>eres?",
+  "title": "¿De cuántos B eres? | HumanBench",
+  "desc": "Las IA ya metieron la pata, ahora te toca a ti. Descubre tus parámetros, si eres MoE o Dense, tu sabor a IA y tu personalidad de modelo. by @Alex_ybuild",
+  "og_title": "¿De cuántos B eres?",
+  "fonts": "family=Lilita+One&family=Nunito:wght@600;800;900",
+  "fun": "\"Lilita One\",\"Nunito\",system-ui,sans-serif",
+  "sans": "\"Nunito\",system-ui,-apple-system,\"Segoe UI\",sans-serif",
+  "id_name": {
+   "豆包": "Siri",
+   "GPT-5 系": "GPT-5"
+  }
+ },
+ "ko": {
+  "locale": "ko-KR",
+  "html_lang": "ko",
+  "hero": "당신은<br><span class=\"hl\">몇<span class=\"b\">B</span></span><br>모델?",
+  "title": "당신은 몇B 모델? | HumanBench",
+  "desc": "AI가 틀린 문제, 이번엔 당신 차례. 파라미터 수, MoE vs Dense, AI 말투, 모델 성격까지. by @Alex_ybuild",
+  "og_title": "당신은 몇B 모델?",
+  "fonts": "family=Jua&family=Lilita+One&family=Noto+Sans+KR:wght@500;700;900",
+  "fun": "\"Jua\",\"Noto Sans KR\",sans-serif",
+  "sans": "\"Noto Sans KR\",\"Apple SD Gothic Neo\",system-ui,sans-serif",
+  "id_name": {
+   "豆包": "Bixby",
+   "GPT-5 系": "GPT-5"
+  }
+ },
+ "fr": {
+  "locale": "fr-FR",
+  "html_lang": "fr",
+  "hero": "Tu fais<br>combien<br>de <span class=\"hl\"><span class=\"b\">B</span></span> ?",
+  "title": "Tu fais combien de B ? | HumanBench",
+  "desc": "Les IA se sont plantées, à toi de jouer. Découvre ton nombre de paramètres, MoE ou Dense, ta saveur d’IA et ta personnalité de modèle. by @Alex_ybuild",
+  "og_title": "Tu fais combien de B ?",
+  "fonts": "family=Lilita+One&family=Nunito:wght@600;800;900",
+  "fun": "\"Lilita One\",\"Nunito\",system-ui,sans-serif",
+  "sans": "\"Nunito\",system-ui,-apple-system,\"Segoe UI\",sans-serif",
+  "id_name": {
+   "豆包": "Siri",
+   "GPT-5 系": "GPT-5"
+  }
+ }
+}

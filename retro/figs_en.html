@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141414;--paper:#FFF7E3;--muted:#6b675e;--yellow:#FFE14D;--pink:#FF7EC3;--pinks:#FFE1F0;--green:#43E08B;--blue:#6C9BFF;--purple:#B78CFF;--red:#FF5A4E;
+--fun:"ZCOOL KuaiLe","Noto Sans SC",sans-serif;--sans:"Noto Sans SC",sans-serif;--num:"Lilita One","Arial Black",sans-serif;--mono:ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}body{margin:0;background:#ddd;font-family:var(--sans);color:var(--ink)}
+.fig{width:1080px;background:var(--paper);background-image:radial-gradient(#e9dfc6 1.2px,transparent 1.3px);background-size:22px 22px;padding:56px 60px 48px;margin:0 0 30px;position:relative;overflow:hidden}
+.k{font:800 15px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+h2{font:400 54px/1.12 var(--fun);margin:0 0 8px}
+.sub{font-size:21px;font-weight:700;color:var(--muted);margin:0 0 30px}
+.box{background:#fff;border:3.5px solid var(--ink);border-radius:22px;box-shadow:7px 7px 0 var(--ink)}
+.st{display:inline-block;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;background:#fff;font:400 22px var(--fun);box-shadow:3px 3px 0 var(--ink)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:34px;padding-top:16px;border-top:3px solid var(--ink);font-weight:800;font-size:17px;color:var(--muted)}
+.foot b{font:400 22px var(--fun);color:var(--ink)}
+.logo{display:inline-grid;place-items:center;width:40px;height:40px;background:var(--ink);color:var(--yellow);border-radius:10px;font:900 20px var(--mono);margin-right:10px;vertical-align:middle}
+.big{font:400 1em var(--num);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+/* 封面 */
+#f1 h1{font:400 92px/1.05 var(--fun);margin:18px 0 10px}
+#f1 h1 .hl{background:var(--yellow);border:4px solid var(--ink);border-radius:18px;padding:0 14px;box-shadow:6px 6px 0 var(--ink);display:inline-block;transform:rotate(-2deg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.cell{padding:22px 22px 18px}
+.cell .n{font-size:64px;line-height:1}.cell .n small{font-size:30px}
+.cell .l{font:400 24px var(--fun);margin-top:10px}.cell .d{font-size:15px;font-weight:700;color:var(--muted);margin-top:4px}
+.c1 .n{color:var(--pink)}.c2 .n{color:var(--yellow)}.c3 .n{color:var(--green)}.c4 .n{color:var(--blue)}.c5 .n{color:var(--purple)}.c6 .n{color:var(--red)}
+/* 漏斗 */
+.fun-row{display:flex;align-items:center;gap:22px;margin:0 0 16px}
+.fun-bar{height:78px;min-width:230px;white-space:nowrap;border:3.5px solid var(--ink);border-radius:18px;box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;padding:0 22px;font:400 30px var(--fun)}
+.fun-n{font:400 44px var(--num);min-width:200px;text-align:right;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;color:#fff;text-shadow:3px 3px 0 var(--ink)}
+.fun-note{font-size:17px;font-weight:700;color:var(--muted)}
+/* 曲线 */
+.chart{padding:24px 26px 18px}
+.ann{font:400 20px var(--fun)}
+/* 阶段 */
+.vs{display:grid;grid-template-columns:1fr 90px 1fr;gap:10px;align-items:stretch;margin-bottom:30px}
+.vs .box{padding:22px}
+.vs .t{font:800 15px var(--mono);letter-spacing:.1em;color:var(--muted)}
+.vs .m{font:400 40px var(--fun);margin:8px 0 4px}
+.vs .q{font-size:17px;font-weight:700;line-height:1.55}
+.vs .arrow{display:grid;place-items:center;font:400 48px var(--num)}
+.ph{display:grid;grid-template-columns:380px 1fr 70px;gap:14px;align-items:center;margin:0 0 11px;font-weight:800;font-size:18px}
+.ph .bar{height:30px;border:3px solid var(--ink);border-radius:10px;background:var(--pink);box-shadow:3px 3px 0 var(--ink)}
+.ph .bar i{display:block;height:100%;background:var(--yellow);border-right:3px solid var(--ink);border-radius:7px 0 0 7px}
+.ph .num{font:400 26px var(--num)}
+/* 改版对比 */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ex{padding:24px 24px 20px}
+.ex .t{font:400 28px var(--fun);margin-bottom:6px}.ex .w{font-size:16px;font-weight:700;color:var(--muted);margin-bottom:14px;min-height:46px}
+.ba{display:flex;align-items:flex-end;gap:14px;height:170px;margin-bottom:10px}
+.ba .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.ba .col i{display:block;width:100%;border:3px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:#d9d3c4}
+.ba .col.hi i{background:var(--pink)}.ba .col.good i{background:var(--green)}.ba .col.bad i{background:var(--pink)}
+.ba .col b{font:400 30px var(--num);margin-bottom:6px}
+.ba .col span{font-size:14px;font-weight:800;color:var(--muted);margin-top:6px;text-align:center}
+.base{border-top:3px solid var(--ink)}
+.ex .v{font:400 22px var(--fun);margin-top:12px}
+.tag{display:inline-block;font:400 18px var(--fun);border:2.5px solid var(--ink);border-radius:8px;padding:0 8px;margin-left:6px}
+.tag.ok{background:var(--green)}.tag.no{background:var(--pink);color:#fff}.tag.mid{background:var(--yellow)}
+/* 来源 */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.list{padding:22px 24px}
+.list .t{font:400 28px var(--fun);margin-bottom:14px}
+.row{display:grid;grid-template-columns:120px 1fr 90px;gap:10px;align-items:center;margin-bottom:9px;font-weight:800;font-size:17px}
+.row .b{height:22px;border:2.5px solid var(--ink);border-radius:7px;background:var(--yellow)}
+.row .v2{font:400 22px var(--num);text-align:right}
+/* 人格 */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pc{padding:16px 18px;display:flex;align-items:center;gap:14px}
+.pc .g{width:56px;height:56px;border-radius:15px;border:3px solid var(--ink);display:grid;place-items:center;color:#fff;font:400 26px var(--num);flex:none}
+.pc .nm{font:400 24px var(--fun)}.pc .pct{font:400 30px var(--num)}
+.facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:22px}
+.fact{padding:18px 20px}.fact .n{font:400 44px var(--num)}.fact .l{font-size:17px;font-weight:800;margin-top:6px;line-height:1.45}
+/* 裂变 */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.step{padding:20px 18px;text-align:center;position:relative}
+.step .i{font:400 40px var(--num);color:var(--pink);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.step .t{font:400 26px var(--fun);margin:6px 0}.step .d{font-size:15px;font-weight:700;color:var(--muted);line-height:1.5}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;font:400 30px var(--num)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kpi{padding:20px 22px}.kpi .n{font:400 52px var(--num)}.kpi .l{font:400 22px var(--fun);margin-top:6px}.kpi .d{font-size:15px;font-weight:700;color:var(--muted);margin-top:4px;line-height:1.5}
+</style><style>/* EN: Lilita One for display, Nunito for everything else */
+:root{--fun:"Nunito",sans-serif;--sans:"Nunito",sans-serif;--disp:"Lilita One","Arial Black",sans-serif}
+h2,#f1 h1,.st,.foot b{font-family:var(--disp)!important;font-weight:400!important}
+.cell .l,.fun-bar,.ann,.vs .m,.ex .t,.ex .v,.tag,.list .t,.pc .nm,.step .t,.kpi .l,.lead,.cap,.tbl th,.shot .t,.inf .r,.cap2,.pp .t{font-weight:900!important}
+h2{line-height:1.08}
+.nm2{font:800 14px var(--sans);color:var(--muted);margin-top:-2px}
+</style></head><body>
+<section class="fig" id="f1"><div class="k">HUMANBENCH · RETRO</div><span class="st">How many B are you?</span>
+<h1 style="font-size:80px">A few hundred followers,<br>$0 ads, <span class="hl">3 days</span></h1>
+<div class="sub">A “you play the AI” joke eval: GPT-6 Pro prototype, Claude Code rebuild, launch, then iterating on data</div>
+<div class="grid">
+<div class="box cell c1"><div class="n big">~1<small>M</small></div><div class="l">Estimated reach</div><div class="d">Tweet impressions + views of shared cards</div></div>
+<div class="box cell c2"><div class="n big">39.9<small>K</small></div><div class="l">Unique visitors</div><div class="d">78K page views</div></div>
+<div class="box cell c3"><div class="n big">12.7<small>K</small></div><div class="l">Finished all 76</div><div class="d">43% of everyone who started</div></div>
+<div class="box cell c4"><div class="n big">13.6<small>K</small></div><div class="l">Organic shares</div><div class="d">Share cards, long images, challenge links</div></div>
+<div class="box cell c5"><div class="n big">96</div><div class="l">Countries &amp; regions</div><div class="d">7 languages. Japan was #1 for a while</div></div>
+<div class="box cell c6"><div class="n big">0</div><div class="l">Ad budget</div><div class="d">Starting point: a few hundred followers on X</div></div>
+</div><div class="foot"><span><span class="logo">h_</span><b>humanbench.ybuild.ai</b></span><span>2026.09.27 – 09.29 · @Alex_ybuild</span></div></section><section class="fig" id="f2"><div class="k">FUNNEL</div><h2>From ~1M reach to 12.7K finishers</h2><div class="sub">A test that takes 10+ minutes, and over 4 in 10 starters made it to the end</div><div class="fun-row"><div class="fun-n">~1,000,000</div><div><div class="fun-bar" style="width:640.0px;background:var(--purple)">Est. reach</div><div class="fun-note" style="margin-top:6px">Hundreds of thousands of tweet impressions + 13.6K shared cards seen</div></div></div><div class="fun-row"><div class="fun-n">39,880</div><div><div class="fun-bar" style="width:422.40000000000003px;background:var(--blue)">Unique visitors</div><div class="fun-note" style="margin-top:6px">78,320 page views</div></div></div><div class="fun-row"><div class="fun-n">29,392</div><div><div class="fun-bar" style="width:332.8px;background:var(--yellow)">Started</div><div class="fun-note" style="margin-top:6px">74% of visitors</div></div></div><div class="fun-row"><div class="fun-n">12,654</div><div><div class="fun-bar" style="width:217.60000000000002px;background:var(--green)">Finished</div><div class="fun-note" style="margin-top:6px">All 76 questions · 43% of starters · 15,448 runs total</div></div></div><div class="fun-row"><div class="fun-n">7,001</div><div><div class="fun-bar" style="width:153.60000000000002px;background:var(--pink)">Shared</div><div class="fun-note" style="margin-top:6px">55% of finishers · 13,638 shares total</div></div></div><div class="foot"><span><span class="logo">h_</span><b>How many B are you?</b></span><span>Data as of 2026-09-29 11:00</span></div></section><section class="fig" id="f3"><div class="k">TRAFFIC · UNIQUE VISITORS PER HOUR</div><h2>One tweet lit it. Two days of organic burn.</h2><div class="sub">Pink: all visitors. Blue: the Japanese page. On day 2 Japan’s morning commute took the baton, then it faded on its own.</div>
+<div class="box chart"><svg id="hc" width="908" height="430" viewBox="0 0 908 430"></svg></div>
+<div class="foot"><span><span class="logo">h_</span><b>How many B are you?</b></span><span>Launched 09-27 15:00</span></div></section><section class="fig" id="f4"><div class="k">PROMPTS</div><h2>4 messages for a prototype.<br>237 for a product.</h2><div class="sub">Every prompt is public, word for word</div>
+<div class="vs"><div class="box"><div class="t">GPT-6 PRO · 1.5 HOURS</div><div class="m">4 messages</div><div class="q">“Fun little app idea: test how many params you have”<br>→ academic prototype v0.2: 528 questions, adaptive testing, design doc</div></div>
+<div class="arrow">→</div><div class="box" style="background:var(--pinks)"><div class="t">CLAUDE CODE · 3 DAYS</div><div class="m">237 messages</div><div class="q">8,600 characters. Message #2: “this doesn’t feel right”<br>→ meme version, shipped and run: 7 languages, data-driven, open source</div></div></div><div class="ph"><span>1. Rebuild the prototype as a meme</span><div class="bar" style="width:71.9298245614035%"></div><span class="num">41</span></div><div class="ph"><span>2. Pre-launch sprint: domain, cards, i18n</span><div class="bar" style="width:28.07017543859649%"></div><span class="num">16</span></div><div class="ph"><span>3. Polish: difficulty, cards, every platform</span><div class="bar" style="width:50.877192982456144%"></div><span class="num">29</span></div><div class="ph"><span>4. Post-launch: tracking, Jev, zh-TW, FR</span><div class="bar" style="width:100.0%"></div><span class="num">57</span></div><div class="ph"><span>5. Late night: Jev batch skips, going global</span><div class="bar" style="width:38.59649122807017%"></div><span class="num">22</span></div><div class="ph"><span>6. Day 2: more Qs, colors, secret type, bugs</span><div class="bar" style="width:52.63157894736842%"></div><span class="num">30</span></div><div class="ph"><span>7. Iterate: channels, Friend PK, security</span><div class="bar" style="width:54.385964912280706%"></div><span class="num">31</span></div><div class="ph"><span>8. Retro and open source</span><div class="bar" style="width:19.298245614035086%"></div><span class="num">11</span></div><div class="foot"><span><span class="logo">h_</span><b>github.com/alex-ybuild/humanbench</b></span><span>Messages I sent, per phase</span></div></section><section class="fig" id="f7"><div class="k">RESULTS</div><h2>What 12.7K people turned out to be</h2><div class="sub">GPT-5 Type came out on top. The secret Human Type showed up about 3 times per 100 runs.</div><div class="pgrid"><div class="box pc"><div class="g" style="background:#1E1E1E">5</div><div><div class="nm">GPT-5 Type</div><div class="pct">20.3%</div></div></div><div class="box pc"><div class="g" style="background:#7c5cff">X</div><div><div class="nm">Grok Type</div><div class="pct">18.6%</div></div></div><div class="box pc"><div class="g" style="background:#10A37F">4o</div><div><div class="nm">GPT-4o Type</div><div class="pct">16.5%</div></div></div><div class="box pc"><div class="g" style="background:#4C6FF6">◇</div><div><div class="nm">Gemini Type</div><div class="pct">10.5%</div></div></div><div class="box pc"><div class="g" style="background:#D97757">C</div><div><div class="nm">Claude Type</div><div class="pct">10.1%</div></div></div><div class="box pc"><div class="g" style="background:#2563EB">K</div><div><div class="nm">Kimi Type</div><div class="pct">8.6%</div></div></div><div class="box pc"><div class="g" style="background:#FF9F1C">S</div><div><div class="nm">Doubao Type</div><div class="nm2">= Siri Type on the EN site</div><div class="pct">8.4%</div></div></div><div class="box pc"><div class="g" style="background:#3A55E0">D</div><div><div class="nm">DeepSeek Type</div><div class="pct">5.7%</div></div></div><div class="box pc"><div class="g" style="background:#141414">H</div><div><div class="nm">Human Type</div><div class="nm2">the secret persona</div><div class="pct">3.2%</div></div></div></div><div class="facts">
+<div class="box fact"><div class="n" style="color:var(--pink)">671B</div><div class="l">Most common size.<br>Same as DeepSeek.</div></div>
+<div class="box fact"><div class="n" style="color:var(--green)">103</div><div class="l">people got everything right.<br>Average accuracy: 67%.</div></div>
+<div class="box fact"><div class="n" style="color:var(--blue)">0.29</div><div class="l">avg jailbreaks for Korean players. About half the rate elsewhere.</div></div>
+</div><div class="foot"><span><span class="logo">h_</span><b>How many B are you?</b></span><span>Personas deduped per player · Secret type: runs since 9/28 10:00</span></div></section><section class="fig" id="f8"><div class="k">VIRAL LOOP</div><h2>How the viral loop spun up</h2><div class="sub">The tweet only lit the first batch. After that it ran on players challenging each other.</div>
+<div class="loop"><div class="box step"><div class="i">01</div><div class="t">Finish</div><div class="d">Your model gets a launch event and 4 share cards</div></div>
+<div class="box step"><div class="i">02</div><div class="t">Post it</div><div class="d">55% of finishers share. Cards carry a QR code and a challenge link</div></div>
+<div class="box step"><div class="i">03</div><div class="t">Friend taps</div><div class="d">Sees your score first:<br>“Can you beat them?”</div></div>
+<div class="box step"><div class="i">04</div><div class="t">Friend PK</div><div class="d">Finishers get a PK card. The loser posts it back</div></div></div>
+<div class="kpis"><div class="box kpi"><div class="n" style="color:var(--pink)">40%</div><div class="l">of new visitors came via friends</div><div class="d">At peak. Launch day: only 14%</div></div>
+<div class="box kpi"><div class="n" style="color:var(--green)">1.3</div><div class="l">new visitors per finisher</div><div class="d">≈0.35 new finishers each</div></div>
+<div class="box kpi"><div class="n" style="color:var(--blue)">2.3</div><div class="l">new visitors per Japanese finisher</div><div class="d">Over half of new Japanese visitors came via shares</div></div></div>
+<div class="foot"><span><span class="logo">h_</span><b>How many B are you?</b></span><span>Friend PK lifted share rate for challenged players by ~8 pts</span></div></section><script>const H=[["09-27 15", 46, 10], ["09-27 16", 1262, 137], ["09-27 17", 2206, 435], ["09-27 18", 1732, 424], ["09-27 19", 1681, 492], ["09-27 20", 1612, 534], ["09-27 21", 2009, 542], ["09-27 22", 2398, 493], ["09-27 23", 2344, 536], ["09-28 00", 1962, 423], ["09-28 01", 1606, 299], ["09-28 02", 1073, 187], ["09-28 03", 715, 144], ["09-28 04", 485, 144], ["09-28 05", 415, 163], ["09-28 06", 651, 321], ["09-28 07", 1085, 497], ["09-28 08", 1465, 594], ["09-28 09", 1649, 505], ["09-28 10", 1848, 521], ["09-28 11", 2156, 590], ["09-28 12", 2063, 656], ["09-28 13", 1836, 503], ["09-28 14", 1797, 451], ["09-28 15", 1706, 459], ["09-28 16", 1401, 374], ["09-28 17", 1204, 306], ["09-28 18", 1018, 247], ["09-28 19", 997, 306], ["09-28 20", 844, 241], ["09-28 21", 765, 202], ["09-28 22", 628, 153], ["09-28 23", 512, 137], ["09-29 00", 423, 74], ["09-29 01", 279, 67], ["09-29 02", 189, 37], ["09-29 03", 106, 22], ["09-29 04", 111, 26], ["09-29 05", 80, 28], ["09-29 06", 137, 64], ["09-29 07", 184, 72], ["09-29 08", 213, 61], ["09-29 09", 303, 73], ["09-29 10", 314, 63], ["09-29 11", 130, 28]];
+const svg=document.getElementById("hc"),W=908,Hh=430,L=58,R=18,T=26,B=58,n=H.length,mx=2600;
+const x=i=>L+i*(W-L-R)/(n-1),y=v=>T+(Hh-T-B)*(1-v/mx);let s="";
+for(const g of [0,500,1000,1500,2000,2500]){s+=`<line x1="${L}" x2="${W-R}" y1="${y(g)}" y2="${y(g)}" stroke="#e3ded1" stroke-dasharray="4 5"/><text x="${L-10}" y="${y(g)+5}" text-anchor="end" font-family="Lilita One" font-size="15" fill="#8a857a">${g}</text>`}
+const pts=H.map((r,i)=>`${x(i)},${y(r[1])}`).join(" ");
+s+=`<polygon points="${L},${y(0)} ${pts} ${x(n-1)},${y(0)}" fill="#FFE1F0"/>`;
+s+=`<polyline points="${pts}" fill="none" stroke="#141414" stroke-width="7" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="#FF7EC3" stroke-width="4" stroke-linejoin="round"/>`;
+s+=`<polyline points="${H.map((r,i)=>`${x(i)},${y(r[2])}`).join(" ")}" fill="none" stroke="#6C9BFF" stroke-width="3.5" stroke-linejoin="round"/>`;
+s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="#141414" stroke-width="3"/>`;
+H.forEach((r,i)=>{const h=r[0].slice(6);if(h==="00"||h==="12"){s+=`<text x="${x(i)}" y="${y(0)+26}" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="15" fill="#6b675e">${r[0].slice(0,5).replace("-","/")} ${h}:00</text>`}});
+const pk=H.reduce((a,r,i)=>r[1]>H[a][1]?i:a,0);
+const note=(i,t,dx,dy)=>{const X=x(i),Y=y(H[i][1]),w=[...t].reduce((a,c)=>a+(c.charCodeAt(0)>255?20:10.7),0)+22,bx=Math.max(L+4,Math.min(X+dx-w/2,W-R-w)),by=Y+dy;
+s+=`<line x1="${X}" y1="${Y}" x2="${bx+w/2}" y2="${by+17}" stroke="#141414" stroke-width="2.5"/><circle cx="${X}" cy="${Y}" r="7" fill="#FFE14D" stroke="#141414" stroke-width="3"/><rect x="${bx}" y="${by}" width="${w}" height="34" rx="9" fill="#fff" stroke="#141414" stroke-width="2.5"/><text x="${bx+11}" y="${by+24}" font-family="Nunito" font-weight="900" font-size="20">${t}</text>`};
+note(0,"15:00 launch",70,-70);note(pk,"Peak: 2,398 / hour",10,-50);
+const jp=H.findIndex(r=>r[0]==="09-28 08");if(jp>0)note(jp,"Japan’s commute",20,-137);
+const nw=H.findIndex(r=>r[0]==="09-28 13");if(nw>0)note(nw,"New questions + Friend PK",150,-40);
+const lw=H.findIndex(r=>r[0]==="09-29 04");if(lw>0)note(lw,"Organic fade",0,-70);
+svg.innerHTML=s;</script></body></html>

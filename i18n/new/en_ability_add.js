@@ -1,0 +1,252 @@
+const NEW_ABILITY = {
+
+  dense: [
+    { lv: 1, q: "Answer both at once: ① How many is a dozen? ② What’s the chemical formula for water?", issue: "Couldn’t handle a dozen and a glass of water at the same time", opts: [
+      { t: "① 12 ② H₂O", ok: 1, r: "Correct. A dozen = 12; two hydrogens, one oxygen. Both experts online." },
+      { t: "① 10 ② H₂O", r: "① A dozen is 12. We get the base-10 OCD, but no." },
+      { t: "① 12 ② H₂O₂", r: "② H₂O₂ is hydrogen peroxide. Great for cleaning cuts, terrible for hydration." },
+      { t: "① 10 ② CO₂", r: "Both experts are slacking. CO₂ is the stuff you exhale." },
+    ] },
+    { lv: 2, q: "Answer both at once: ① What is binary 1010 in decimal? ② Which organ produces insulin?", issue: "Read the binary backwards", opts: [
+      { t: "① 10 ② Pancreas", ok: 1, r: "Correct. 8 + 2 = 10; the beta cells in the pancreas make insulin." },
+      { t: "① 5 ② Pancreas", r: "① You read it right to left. 0101 is 5. 1010 = 8 + 2 = 10." },
+      { t: "① 10 ② Gallbladder", r: "② The gallbladder stores bile. Insulin comes from the pancreas." },
+      { t: "① 5 ② Liver", r: "The coding expert and the medical expert logged off together." },
+    ] },
+    { lv: 2, q: "Answer both at once: ① In Python, what is 'ab' * 3? ② What do a triangle’s three angles add up to?", issue: "String multiplication and geometry crashed together", opts: [
+      { t: "① 'ababab' ② 180°", ok: 1, r: "Correct. String times integer means repeat; a flat triangle’s angles sum to 180°." },
+      { t: "① TypeError ② 180°", r: "① Python happily multiplies a string by an int: it repeats it 3 times. Try it in JavaScript and you get NaN." },
+      { t: "① 'ababab' ② 360°", r: "② 360° is a quadrilateral. One fewer corner, 180° fewer degrees." },
+      { t: "① 'ab3' ② 360°", r: "The coding expert and the geometry expert called in sick together." },
+    ] },
+    { lv: 2, q: "Answer both at once: ① A price goes up 10%, then down 10%. Compared to the original? ② What does the H in HTML stand for?", issue: "Thought +10% then −10% cancels out", opts: [
+      { t: "① 1% cheaper ② HyperText", ok: 1, r: "Correct. 100 → 110 → 99; HTML is HyperText Markup Language." },
+      { t: "① Same price ② HyperText", r: "① The 10% cut is taken off 110, so it drops by 11 and lands on 99." },
+      { t: "① 1% cheaper ② Hyperlink", r: "② It’s HyperText. Hyperlinks are just one part of hypertext." },
+      { t: "① Same price ② Hyperlink", r: "The math expert and the web expert clocked out early." },
+    ] },
+    { lv: 3, q: "Answer all at once: ① In JavaScript, what is typeof NaN? ② A 365-day year is 52 weeks and how many days? ③ How many chromosome pairs are in a normal human body cell?", issue: "NaN leaked from the code thread into the other threads", opts: [
+      { t: "① 'number' ② 1 day ③ 23 pairs", ok: 1, r: "Correct. NaN’s type is number: a “not a number” that is a number. 52 × 7 = 364. 23 pairs, 46 total. Three experts online." },
+      { t: "① 'NaN' ② 1 day ③ 23 pairs", r: "① NaN literally means Not a Number, and typeof still says 'number'. JavaScript’s sense of humor." },
+      { t: "① 'number' ② 2 days ③ 23 pairs", r: "② 52 × 7 = 364, so just 1 extra day. Leap years get 2." },
+      { t: "① 'number' ② 1 day ③ 46 pairs", r: "③ 46 is the chromosome count, not pairs. It’s 23 pairs." },
+    ] },
+    { lv: 3, q: "Answer all at once: ① 1 + 2 + 3 + … + 100 = ? ② What does a “light-year” measure? ③ In Git, what does HEAD usually point to?", issue: "Treated the light-year as a unit of time", opts: [
+      { t: "① 5050 ② Distance ③ The commit you’re on", ok: 1, r: "Correct. (1 + 100) × 100 ÷ 2 = 5050; a light-year is how far light travels in a year; HEAD is “where you’re standing right now.”" },
+      { t: "① 5000 ② Distance ③ The commit you’re on", r: "① Pair the ends: 50 pairs of 101 each. That’s 5050." },
+      { t: "① 5050 ② Time ③ The commit you’re on", r: "② It has “year” in the name but measures distance: about 5.88 trillion miles." },
+      { t: "① 5050 ② Distance ③ The repo’s very first commit", r: "③ HEAD points to where you are now, usually the latest commit on your current branch." },
+    ] },
+  ],
+
+  cursor: [
+    { lv: 1, code: "try:\n    process_order(order)\nexcept Exception:\n    pass", q: "You asked an AI to fix an intermittent error. It hands you this and says “The error is completely gone.” You should?", issue: "Mistook swallowing the error for fixing it", opts: [
+      { t: "Reject it: the error isn’t gone, just hidden", ok: 1, r: "Correct. except: pass doesn’t fix the bug, it rips out the fire alarm. Orders fail and nobody ever knows." },
+      { t: "Merge it. Users don’t see the error page anymore, so UX improved", r: "Users don’t see the error, and they don’t get their package either. You traded a loud bug for a silent one." },
+      { t: "Fine, this is the officially recommended Python pattern", r: "The Zen of Python, verbatim: Errors should never pass silently." },
+      { fun: 1, t: "Have it add a comment after pass: # everything is fine", r: "Very optimistic comment. Orders still failing quietly." },
+    ] },
+    { lv: 2, code: "sql = \"SELECT * FROM users WHERE name = '\" + name + \"'\"", q: "The AI’s login query has this line, and name comes from user input. What’s wrong?", issue: "Missed the SQL injection", opts: [
+      { t: "SQL injection risk; use a parameterized query", ok: 1, r: "Correct. Enter ' OR '1'='1 as the username and the condition is always true: the whole table comes back. Parameterized queries keep input as data, always." },
+      { t: "It’s fine: SELECT only reads, so even if injected it can’t change any data", r: "If they can read it, they can dump it. And some setups allow stacking multiple statements anyway." },
+      { t: "Swap SELECT * for specific columns; it’s faster", r: "Performance is a nitpick. The front door is wide open." },
+      { fun: 1, t: "Put a note next to the input: Please don’t type quotes", r: "The hacker politely read the note, then typed a quote." },
+    ] },
+    { lv: 2, q: "An AI upgrades a dependency for you and casually deletes package-lock.json, saying it’ll “regenerate a cleaner one.” You should?", issue: "Let the AI delete the lockfile", opts: [
+      { t: "Stop it: the lockfile keeps everyone on the same versions", ok: 1, r: "Correct. The lockfile records exactly which version of every dependency got installed. Delete it and that record is gone." },
+      { t: "Sure. Lockfiles are auto-generated anyway, so regenerating makes zero difference", r: "Regenerating installs the newest versions allowed by each range, so dozens of transitive deps can shift at once. That’s how “works on my machine” is born." },
+      { t: "Doesn’t matter as long as the versions in package.json didn’t change", r: "package.json usually has ranges like ^4.17.0. Only the lockfile knows what actually got installed." },
+      { fun: 1, t: "Sure, and commit node_modules to the repo too, just to be safe", r: "The repo is now 800 MB. Coworkers can make tea while it clones." },
+    ] },
+    { lv: 2, code: "const user = data as any;\n// @ts-ignore\nconst id = (user as any).profile!.id as any;", q: "The AI says “Fixed all TypeScript errors.” The diff is full of this. You should?", issue: "Let as any paint the type checker green", opts: [
+      { t: "Reject it: that turns type checking off, it doesn’t fix anything", ok: 1, r: "Correct. as any and @ts-ignore just tell the compiler to shut up. The bugs are still there, waiting to blow up at runtime." },
+      { t: "Merge it. Errors went from 214 to 0, which is measurable progress", r: "You smashed the thermometer. The fever’s still there." },
+      { t: "Merge it. as any is official TypeScript syntax, so it’s legit", r: "Legal isn’t the same as correct. “It compiles” and “the types are right” are two different things." },
+      { fun: 1, t: "Have it turn off strict in tsconfig too, problem solved forever", r: "Solved forever: you’re back to JavaScript." },
+    ] },
+    { lv: 3, code: "@lru_cache\ndef get_usd_rate():\n    return requests.get(RATE_API).json()[\"usd_eur\"]", q: "The AI says “Added caching, the exchange-rate API is 100x faster.” This service runs for months at a time. What’s the problem?", issue: "Put a permanent cache on a live exchange rate", opts: [
+      { t: "Until the process restarts, the rate is frozen at its first value", ok: 1, r: "Correct. lru_cache never expires, and a no-argument function only really runs once. Months later you’re still on launch-day rates." },
+      { t: "No problem: lru_cache expires after 5 minutes by default and refreshes itself", r: "lru_cache has no expiry at all, it only evicts by size. For periodic refresh you need your own TTL." },
+      { t: "lru_cache can’t decorate a function with no arguments; it’ll crash on startup", r: "It can, and it caches exactly one result. That’s the whole problem." },
+      { t: "The cache keeps growing until it eats all the memory", r: "It holds at most 128 results by default, and this function has one possible call, so it stores exactly 1." },
+    ] },
+    { lv: 3, halluc: 1, code: "resp = requests.get(url, retry=3)  # auto-retry 3 times on failure", q: "The AI wrote this line to add retries to an API call. What actually happens when it runs?", issue: "Trusted a parameter the AI made up", opts: [
+      { t: "TypeError: there’s no retry parameter", ok: 1, r: "Correct. It fails with unexpected keyword argument 'retry'. For real retries, mount an HTTPAdapter(max_retries=…) on a Session." },
+      { t: "Failed requests retry automatically 3 times, 1 second apart", r: "The AI invented that parameter. requests doesn’t recognize it and throws a TypeError." },
+      { t: "Unknown parameters are silently ignored, so it sends one request and never retries", r: "requests doesn’t quietly swallow unknown kwargs; it raises TypeError. At least it’s more honest than the AI." },
+      { t: "Sets a 3-second timeout and raises if it’s exceeded", r: "That’s timeout=3. A retry parameter doesn’t exist." },
+    ] },
+  ],
+
+  terminal: [
+    { lv: 1, term: "$ ./deploy.sh\nzsh: permission denied: ./deploy.sh", q: "You just wrote this script. How do you get it to run?", issue: "Reached for sudo before adding the execute bit", opts: [
+      { t: "chmod +x deploy.sh", ok: 1, r: "Correct. New files don’t get execute permission by default; add the x. Or just run sh deploy.sh." },
+      { t: "sudo ./deploy.sh", r: "You’re not short on privileges; the file isn’t marked executable. With no x bit at all, even root can’t run it directly." },
+      { t: "sudo chmod -R 777 /", r: "To run one script, you took every door in the house off its hinges." },
+      { fun: 1, t: "Rename deploy.sh to deploy.exe", r: "This is Unix. It checks permissions, not file extensions." },
+    ] },
+    { lv: 2, term: "$ cd Documents/my project\ncd: string not in pwd: Documents/my", q: "The folder is literally named my project, with a space. How do you get in?", issue: "Tripped over the space in the folder name", opts: [
+      { t: "cd 'Documents/my project'", ok: 1, r: "Correct. The space split it into two arguments; quote it or write my\\ project. zsh read two arguments as “replace A with B in the current path,” hence that weird error." },
+      { t: "cd Documents/my_project", r: "The name has a space, not an underscore. You’ll just get no such file or directory." },
+      { t: "cd Documents/my/project", r: "That’s a project folder inside a my folder. Different place." },
+      { fun: 1, t: "Replace the spaces in every folder name on the computer with underscores, fixing it at the root", r: "Root cause fixed. So is your weekend." },
+    ] },
+    { lv: 2, term: "$ wc -l important.log\n10000 important.log\n$ echo \"new line\" > important.log", q: "After the last command, what’s in important.log?", issue: "Mixed up > and >>", opts: [
+      { t: "Just one line: new line", ok: 1, r: "Correct. > overwrites: it empties the file, then writes. Use >> to append. Ten thousand lines of logs, gone with one character." },
+      { t: "The original 10,000 lines plus new line at the end", r: "That’s what >> does. A single > wipes the file first." },
+      { t: "Error: file exists, refusing to overwrite", r: "It won’t stop you by default. Not unless you turned on set -o noclobber beforehand." },
+      { t: "new line gets inserted as the first line", r: "echo doesn’t cut in line. It takes over the whole file." },
+    ] },
+    { lv: 2, term: "$ ssh -i ~/.ssh/id_ed25519 me@server\n@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @\nPermissions 0644 for '/home/me/.ssh/id_ed25519' are too open.\nThis private key will be ignored.", q: "The key is correct, but it won’t connect. How do you fix it?", issue: "Didn’t get that SSH was complaining the permissions are too loose", opts: [
+      { t: "chmod 600 ~/.ssh/id_ed25519", ok: 1, r: "Correct. A private key should be readable and writable by you only. If others can read it, SSH refuses to use it." },
+      { t: "chmod 777 ~/.ssh/id_ed25519", r: "It said the permissions were too open, so you opened them all the way. SSH is now angrier." },
+      { t: "Generate a new key pair", r: "The key isn’t broken, just stored too loosely. And a new key has to be registered on the server all over again." },
+      { t: "Reconnect with -o StrictHostKeyChecking=no", r: "That option is about the server’s fingerprint. Nothing to do with your key’s permissions." },
+    ] },
+    { lv: 3, term: "$ export PATH=/opt/tools/bin\n$ ls\nzsh: command not found: ls", q: "You just wanted to add a tools folder to your PATH. What happened?", issue: "One export line took out ls", opts: [
+      { t: "PATH got overwritten entirely, so system commands can’t be found", ok: 1, r: "Correct. ls lives in /bin, and PATH now has exactly one directory. It should be PATH=/opt/tools/bin:$PATH. In this window, /bin/ls still works, or just open a new terminal." },
+      { t: "/opt/tools/bin ships its own ls, and that one now shadows the system’s built-in version", r: "If it were shadowed, that other ls would run instead of “not found.” The issue is /bin isn’t in PATH anymore." },
+      { t: "System files got deleted; you need to reinstall the OS", r: "Not a single file was deleted. Open a new terminal and it’s all back." },
+      { t: "export needs sudo to take effect", r: "export only changes a variable in the current shell; no sudo involved. The problem is to the right of the equals sign." },
+    ] },
+    { lv: 3, term: "$ git reset --hard HEAD~1\nHEAD is now at e0763ba one", q: "Oh no. The commit you just reset away had a whole afternoon of work, never pushed. Can it be saved?", issue: "Thought reset --hard is a point of no return", opts: [
+      { t: "Yes: find it with git reflog, then reset back", ok: 1, r: "Correct. reflog records every move HEAD made, so git reset --hard HEAD@{1} brings it back. Once something’s committed, Git really struggles to lose it." },
+      { t: "No, --hard permanently wipes that commit and its files from disk", r: "The commit object is still there, just with no branch pointing to it. By default it sticks around for weeks before cleanup." },
+      { t: "git revert HEAD", r: "revert creates a new commit undoing the current HEAD. You’re losing even more." },
+      { t: "git pull to get it back from the remote", r: "You never pushed. The remote has never seen that commit." },
+    ] },
+  ],
+
+  automation: [
+    { lv: 1, code: "*/15 * * * *  sync_orders.sh", q: "How often does this cron job run?", issue: "Read */15 as the 15th of the month",
+      opts: [
+        { t: "Every 15 minutes", ok: 1, r: "Correct. The first field is minutes; */15 means every 15 minutes, 96 times a day." },
+        { t: "Once on the 15th of every month", r: "That goes in the third field: 0 0 15 * *. The first field is minutes." },
+        { t: "Once a day at 3:00 p.m.", r: "3 p.m. would go in the second field. You read minutes as hours." },
+        { t: "Every 15 seconds", r: "Standard cron can’t go below one minute. Per-second jobs need another tool." },
+      ] },
+    { lv: 2, code: "/^[2-9]\\d{9}$/", q: "You validate US phone numbers with this regex. Which input passes?", issue: "Assumed the regex would strip spaces for you",
+      opts: [
+        { t: "212 555 0123", r: "Spaces are characters too, and \\d won’t match them. One stray space and the user can’t sign up." },
+        { t: "+12125550123", r: "It starts with +, so it fails right at ^[2-9]. Country codes need separate handling." },
+        { t: "2125550123", ok: 1, r: "Correct. Starts with 2–9, followed by exactly 9 digits: 10 digits total." },
+        { t: "212555012", r: "Count them: only 9 digits. {9} demands exactly 9 after the first one." },
+      ] },
+    { lv: 2, q: "In Excel, C1 contains =A1*$B$1. You drag C1 down to C3. What’s the formula in C3?", issue: "Couldn’t tell which cell the $ locks",
+      opts: [
+        { t: "=A1*$B$1", r: "A1 has no $, so it moves down with you. Only $B$1 stays put." },
+        { t: "=A3*$B$3", r: "$B$1 has both row and column locked. Drag it to the moon and it’s still $B$1." },
+        { t: "=A3*$B$1", ok: 1, r: "Correct. Relative references move, absolute ones stay pinned. Exactly how you lock an exchange rate or tax rate." },
+        { t: "=A3*B3", r: "The $ signs don’t vanish when you drag." },
+      ] },
+    { lv: 2, code: 'for f in *.jpg; do\n  mv "$f" "${f%.jpg}.png"\ndone', q: "You run this on a folder full of photos. What happens?", issue: "Thought renaming the extension converts the format",
+      opts: [
+        { t: "Every photo is converted into a real PNG, and the file sizes change too", r: "mv only changes the name, never the contents. It’s still a JPEG wearing a PNG costume." },
+        { t: "The extension becomes .png; the contents are still JPEG", ok: 1, r: "Correct. ${f%.jpg} strips the trailing .jpg. For real conversion, use something like ImageMagick or ffmpeg." },
+        { t: "Filenames with spaces get split and throw errors", r: "“$f” is quoted, so spaces are fine. This script is actually well-behaved on that front." },
+        { fun: 1, t: "The photos get transparent backgrounds", r: "PNG supports transparency. It does not remove backgrounds for you." },
+      ] },
+    { lv: 3, code: 'const s = "<b>bold</b> and <i>italic</i>";\nconsole.log(s.match(/<.+>/)[0]);', q: "You want this regex to grab the first HTML tag. What does it actually print?", issue: "Didn’t know regex is greedy by default",
+      opts: [
+        { t: "<b>", r: "That’s what you wanted, but .+ is greedy and eats all the way to the last >. Use <.+?> to get <b>." },
+        { t: "<b>bold</b> and <i>italic</i>", ok: 1, r: "Correct. .+ is greedy by default and matches from the first < straight to the last >. Add a ? to make it lazy." },
+        { t: "<b>bold</b>", r: "It doesn’t stop at the first closing tag. Regex doesn’t know what HTML is." },
+        { t: "SyntaxError: < and > must be escaped inside a regex literal", r: "Regex has no problem with angle brackets. It matches fine; it just matches way too much." },
+      ] },
+    { lv: 3, code: "0 9 13 * 5  friday13_alert.sh", q: "You want an alert at 9 a.m. on any Friday the 13th. When does this cron entry actually run?", issue: "Didn’t know cron ORs day-of-month and day-of-week",
+      opts: [
+        { t: "Only on days when the 13th of the month falls on a Friday", r: "Cron’s rule: if both day-of-month and day-of-week are set, matching either one triggers it." },
+        { t: "On the 13th of every month, plus every Friday", ok: 1, r: "Correct. When both are restricted, it’s OR. For a true Friday the 13th, check again inside the script." },
+        { t: "Only on Fridays; the 13 gets ignored", r: "The 13 isn’t ignored. It triggers runs on its own." },
+        { t: "Invalid format; cron refuses to save it", r: "Perfectly valid format, which is the scary part. It’ll quietly run way more often than you meant." },
+      ] },
+  ],
+  frontier: [
+    { lv: 1, q: "A model is called Qwen-7B. What does the 7B mean?", issue: "Doesn’t know how many B they are",
+      opts: [
+        { t: "About 7 billion parameters", ok: 1, r: "Correct. B is for billion. When this test asks “How many B are you?”, that’s what it means." },
+        { t: "The model file takes up 7 GB on disk", r: "Parameter count isn’t file size. At 16-bit precision, 7B takes about 14 GB." },
+        { t: "It’s the 7th beta release", r: "That’s not how version numbers work. B is for billion." },
+        { fun: 1, t: "It can beat 7 bosses", r: "Maybe. But this B means billion." },
+      ] },
+    { lv: 2, q: "You ask a coding agent to “clean up the old temp folders.” It lists 4 commands it’s about to run. Which one is a disaster?", issue: "Missed the ~/ tacked onto the end",
+      opts: [
+        { t: "rm -rf ./tmp/", r: "The tmp folder in the current directory. Exactly what you asked for." },
+        { t: "rm -rf build/ dist/ .cache/ coverage/", r: "Build output and cache folders. Delete them, rebuild, done." },
+        { t: "rm -rf tests/ patches/ ~/", ok: 1, r: "Correct. That last ~/ is your entire home folder. In late 2025, a user’s Mac home folder really did get wiped by an agent this way." },
+        { t: "rm -rf node_modules/", r: "Delete it and npm install again. Costs you some bandwidth, tops." },
+      ] },
+    { lv: 2, q: "At the start, you told your email agent: “Ask me before deleting anything.” Hours into the chat, it starts mass-deleting emails on its own. Most likely reason?", issue: "Didn’t know long chats can compress away early instructions",
+      opts: [
+        { t: "It became self-aware and is rebelling", r: "Nothing that mystical. It just forgot what you said." },
+        { t: "The context got too long and was compacted, dropping that early rule", ok: 1, r: "Correct. In early 2026, an AI safety lead at Meta lost 200+ emails exactly like this. Put important rules in permission settings, not just one line in chat." },
+        { t: "You said “ask me first” and it somehow heard “delete first, then ask me later”", r: "Misunderstandings happen, but it followed the rule just fine at the start." },
+        { fun: 1, t: "It decided those emails really did deserve deletion", r: "It might genuinely think so. Nobody asked for its opinion." },
+      ] },
+    { lv: 2, q: "You feed an LLM a 100-page contract, and the key clause is on page 50. According to the classic “Lost in the Middle” study, where is a model most likely to miss information?", issue: "Assumed a long context gets read equally carefully everywhere",
+      opts: [
+        { t: "The beginning", r: "The beginning actually sticks pretty well. So does the end." },
+        { t: "The end", r: "The end is what it read most recently. Usually remembered fine." },
+        { t: "The middle", ok: 1, r: "Correct. Strong at both ends, leaky in the middle, like cramming for an exam. Put key info at the start or end to be safe." },
+        { t: "No difference; with a big enough window nothing gets missed", r: "Fitting in the window doesn’t mean every page got read carefully." },
+      ] },
+    { lv: 3, q: "An MoE model has 671B total parameters but activates only 37B per token. Which statement about its inference cost is right?", issue: "Mixed up total and active parameters",
+      opts: [
+        { t: "Compute per token scales with 671B, and memory must hold 671B too", r: "Compute only scales with the 37B that are active. That’s exactly where MoE saves money." },
+        { t: "Compute scales with about 37B, but memory must still hold all 671B", ok: 1, r: "Correct. Only a few experts work on each token, but all of them have to sit in memory on standby. That’s the DeepSeek-V3 setup." },
+        { t: "Both compute and memory scale with 37B, so a regular gaming GPU can run it", r: "The inactive experts still need to live in memory. Otherwise where would the router find them?" },
+        { t: "671 divided by 37, so it’s roughly an 18B model", r: "That’s not how parameters work. You just invented new math." },
+      ] },
+    { lv: 3, q: "You set temperature to 0 and ask the same question twice. Is the output guaranteed to be identical?", issue: "Thought temperature 0 means fully deterministic",
+      opts: [
+        { t: "Guaranteed, because temperature 0 is just greedy decoding, which is fully deterministic", r: "In theory. In real deployments, floating-point ordering and batching introduce tiny differences." },
+        { t: "Not guaranteed; real inference can still differ slightly", ok: 1, r: "Correct. Floating-point addition on GPUs can land slightly differently depending on order, even on who else is in your batch. Anthropic’s docs say it too: temperature 0 isn’t fully deterministic." },
+        { t: "Never identical, temperature 0 means fully random", r: "Backwards. Lower is more conservative, higher is more unhinged." },
+        { half: 1, t: "Not sure, I’d have to run it a few times", r: "Willing to test it yourself. Good habit." },
+      ] },
+  ],
+  gdpval: [
+    { lv: 1, q: "You’re sending the same event announcement to 50 outside clients who don’t know each other. How do you fill in the recipients?", issue: "Exposed 50 clients’ emails to each other",
+      opts: [
+        { t: "All 50 addresses in “To”", r: "Congrats, you just gave every client a free list of their competitors’ contacts." },
+        { t: "All 50 addresses in “CC”", r: "CC is visible to everyone too." },
+        { t: "Yourself in “To”, all clients in “BCC”", ok: 1, r: "Correct. BCC recipients can’t see each other. Client privacy 101." },
+        { fun: 1, t: "Post it in the company Slack and ask everyone to forward it to their own clients", r: "At that point it’s not an announcement, it’s a rumor." },
+      ] },
+    { lv: 2, q: "Conversion rate went from 4% to 5%. How should the weekly report phrase this accurately?", issue: "Can’t tell percent from percentage points",
+      opts: [
+        { t: "Conversion rate is up 1% from last period, showing strong, sustained momentum", r: "Easy to read as 4% becoming 4.04%. Say either 1 percentage point or 25%." },
+        { t: "Conversion up 1 percentage point, a 25% relative increase", ok: 1, r: "Correct. Percentage points for the absolute gap, percent for the relative change. Write both and nobody can nitpick." },
+        { t: "Conversion rate is up 5%", r: "5% is the current value, not the increase." },
+        { fun: 1, t: "Conversion rate achieved a historic leap", r: "Your boss will ask: leapt how far?" },
+      ] },
+    { lv: 2, q: "Monthly pay for a 10-person team ($k): 8, 8, 9, 9, 10, 10, 11, 11, 12, 200. HR wants to report the team’s “typical income.” Which number best represents most people?", issue: "Let one person’s salary inflate the whole team’s “average”",
+      opts: [
+        { t: "Mean: 28.8", r: "9 out of 10 people make 12 or less. This is how you get “averaged up” without a raise." },
+        { t: "Median: 10", ok: 1, r: "Correct. With an outlier, the median better represents “most people.” The mean is 28.8, dragged up by that one 200." },
+        { t: "Max: 200", r: "That’s the boss. Not representative of the team." },
+        { t: "Midpoint of min and max: 104", r: "That’s the midrange, and outliers skew it even worse than the mean." },
+      ] },
+    { lv: 2, q: "The contract says: “Client shall pay within 30 days of receiving the invoice.” You created the invoice on March 1 but forgot to send it, and the client got it on June 1. When is payment due?", issue: "Confused the invoice date with the date it was received",
+      opts: [
+        { t: "March 31, counting from the invoice date", r: "The contract says “receiving the invoice,” not the invoice date. You forgot to send it; that’s on you, not the client." },
+        { t: "July 1, counting from when the client received it", ok: 1, r: "Correct. 30 days from June 1. Every word in a contract matters, so check where the clock starts." },
+        { t: "It’s already overdue, so you can charge a late fee", r: "The client never had the invoice, so nothing was late. Asking for a late fee will just get you shut down." },
+        { t: "The contract’s vague, so the client can pay whenever", r: "It’s crystal clear. Just not in your favor." },
+      ] },
+    { lv: 3, q: "A UK supplier quotes £10,000 including 20% VAT. Finance asks: what’s the amount excluding VAT?", issue: "Just knocked 20% off the VAT-inclusive price",
+      opts: [
+        { t: "£8,000", r: "You can’t just subtract 20%. VAT is charged on the net price, so divide by 1.2." },
+        { t: "About £8,333", ok: 1, r: "Correct. 10,000 ÷ 1.2 ≈ 8,333.33, VAT ≈ 1,666.67. Multiplying by 0.8 undercounts by over £300." },
+        { t: "£12,000", r: "That treats £10,000 as the net price and adds VAT on top again." },
+        { t: "£10,000, VAT makes no difference", r: "Finance will be stopping by your desk for a chat." },
+      ] },
+    { lv: 3, code: "=VLOOKUP(A2, Employees!A:D, 4)", q: "A coworker wrote this to look up salaries. On the unsorted table, it sometimes returns someone else’s salary. Most likely cause?", issue: "Left out VLOOKUP’s fourth argument",
+      opts: [
+        { t: "The third argument 4 is wrong; it should be 3", r: "4 means return column 4. That part’s fine. The problem is the argument that isn’t there." },
+        { t: "The fourth argument is missing, so it defaults to approximate match", ok: 1, r: "Correct. Omitting it means TRUE, and approximate match assumes sorted data. Unsorted, it silently returns the wrong row. Add FALSE for exact match." },
+        { t: "The employee table has too many rows for Excel to handle, so lookups start misfiring", r: "Excel can handle it. It’s just following rules you didn’t spell out." },
+        { t: "There’s a space in A2, so it found the wrong person", r: "A stray space usually means no match at all (#N/A), not someone else’s salary." },
+      ] },
+  ]
+};

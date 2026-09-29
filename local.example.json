@@ -1,0 +1,6 @@
+{
+ "playwright": "/absolute/path/to/node_modules/playwright",
+ "chromium": "/absolute/path/to/chrome-headless-shell",
+ "esbuild": "/absolute/path/to/node_modules/esbuild/bin/esbuild",
+ "wrangler": "/absolute/path/to/node_modules/.bin/wrangler"
+}

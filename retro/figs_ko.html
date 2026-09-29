@@ -1,0 +1,124 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Lilita+One&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#141414;--paper:#FFF7E3;--muted:#6b675e;--yellow:#FFE14D;--pink:#FF7EC3;--pinks:#FFE1F0;--green:#43E08B;--blue:#6C9BFF;--purple:#B78CFF;--red:#FF5A4E;
+--fun:"Jua","Noto Sans KR",sans-serif;--sans:"Noto Sans KR",sans-serif;--num:"Lilita One","Arial Black",sans-serif;--mono:ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}.nw{white-space:nowrap}body{margin:0;background:#ddd;word-break:keep-all;font-family:var(--sans);color:var(--ink)}
+.fig{width:1080px;background:var(--paper);background-image:radial-gradient(#e9dfc6 1.2px,transparent 1.3px);background-size:22px 22px;padding:56px 60px 48px;margin:0 0 30px;position:relative;overflow:hidden}
+.k{font:800 15px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:10px}
+h2{font:400 54px/1.12 var(--fun);margin:0 0 8px}
+.sub{font-size:21px;font-weight:700;color:var(--muted);margin:0 0 30px}
+.box{background:#fff;border:3.5px solid var(--ink);border-radius:22px;box-shadow:7px 7px 0 var(--ink)}
+.st{display:inline-block;border:3px solid var(--ink);border-radius:999px;padding:4px 16px;background:#fff;font:400 22px var(--fun);box-shadow:3px 3px 0 var(--ink)}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:34px;padding-top:16px;border-top:3px solid var(--ink);font-weight:800;font-size:17px;color:var(--muted)}
+.foot b{font:400 22px var(--fun);color:var(--ink)}
+.logo{display:inline-grid;place-items:center;width:40px;height:40px;background:var(--ink);color:var(--yellow);border-radius:10px;font:900 20px var(--mono);margin-right:10px;vertical-align:middle}
+.big{font:400 1em var(--num);-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink)}
+/* 封面 */
+#f1 h1{font:400 92px/1.05 var(--fun);margin:18px 0 10px}
+#f1 h1 .hl{background:var(--yellow);border:4px solid var(--ink);border-radius:18px;padding:0 14px;box-shadow:6px 6px 0 var(--ink);display:inline-block;transform:rotate(-2deg)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.cell{padding:22px 22px 18px}
+.cell .n{font-size:64px;line-height:1}.cell .n small{font-size:30px}
+.cell .l{font:400 24px var(--fun);margin-top:10px}.cell .d{font-size:15px;font-weight:700;color:var(--muted);margin-top:4px}
+.c1 .n{color:var(--pink)}.c2 .n{color:var(--yellow)}.c3 .n{color:var(--green)}.c4 .n{color:var(--blue)}.c5 .n{color:var(--purple)}.c6 .n{color:var(--red)}
+/* 漏斗 */
+.fun-row{display:flex;align-items:center;gap:22px;margin:0 0 16px}
+.fun-bar{height:78px;min-width:230px;white-space:nowrap;border:3.5px solid var(--ink);border-radius:18px;box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;padding:0 22px;font:400 30px var(--fun)}
+.fun-n{font:400 44px var(--num);min-width:200px;text-align:right;-webkit-text-stroke:2px var(--ink);paint-order:stroke fill;color:#fff;text-shadow:3px 3px 0 var(--ink)}
+.fun-note{font-size:17px;font-weight:700;color:var(--muted)}
+/* 曲线 */
+.chart{padding:24px 26px 18px}
+.ann{font:400 20px var(--fun)}
+/* 阶段 */
+.vs{display:grid;grid-template-columns:1fr 90px 1fr;gap:10px;align-items:stretch;margin-bottom:30px}
+.vs .box{padding:22px}
+.vs .t{font:800 15px var(--mono);letter-spacing:.1em;color:var(--muted)}
+.vs .m{font:400 40px var(--fun);margin:8px 0 4px}
+.vs .q{font-size:17px;font-weight:700;line-height:1.55}
+.vs .arrow{display:grid;place-items:center;font:400 48px var(--num)}
+.ph{display:grid;grid-template-columns:380px 1fr 70px;gap:14px;align-items:center;margin:0 0 11px;font-weight:800;font-size:18px}
+.ph .bar{height:30px;border:3px solid var(--ink);border-radius:10px;background:var(--pink);box-shadow:3px 3px 0 var(--ink)}
+.ph .bar i{display:block;height:100%;background:var(--yellow);border-right:3px solid var(--ink);border-radius:7px 0 0 7px}
+.ph .num{font:400 26px var(--num)}
+/* 改版对比 */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ex{padding:24px 24px 20px}
+.ex .t{font:400 28px var(--fun);margin-bottom:6px}.ex .w{font-size:16px;font-weight:700;color:var(--muted);margin-bottom:14px;min-height:46px}
+.ba{display:flex;align-items:flex-end;gap:14px;height:170px;margin-bottom:10px}
+.ba .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.ba .col i{display:block;width:100%;border:3px solid var(--ink);border-bottom:0;border-radius:10px 10px 0 0;background:#d9d3c4}
+.ba .col.hi i{background:var(--pink)}.ba .col.good i{background:var(--green)}.ba .col.bad i{background:var(--pink)}
+.ba .col b{font:400 30px var(--num);margin-bottom:6px}
+.ba .col span{font-size:14px;font-weight:800;color:var(--muted);margin-top:6px;text-align:center}
+.base{border-top:3px solid var(--ink)}
+.ex .v{font:400 22px var(--fun);margin-top:12px}
+.tag{display:inline-block;font:400 18px var(--fun);border:2.5px solid var(--ink);border-radius:8px;padding:0 8px;margin-left:6px}
+.tag.ok{background:var(--green)}.tag.no{background:var(--pink);color:#fff}.tag.mid{background:var(--yellow)}
+/* 来源 */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.list{padding:22px 24px}
+.list .t{font:400 28px var(--fun);margin-bottom:14px}
+.row{display:grid;grid-template-columns:120px 1fr 90px;gap:10px;align-items:center;margin-bottom:9px;font-weight:800;font-size:17px}
+.row .b{height:22px;border:2.5px solid var(--ink);border-radius:7px;background:var(--yellow)}
+.row .v2{font:400 22px var(--num);text-align:right}
+/* 人格 */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pc{padding:16px 18px;display:flex;align-items:center;gap:14px}
+.pc .g{width:56px;height:56px;border-radius:15px;border:3px solid var(--ink);display:grid;place-items:center;color:#fff;font:400 26px var(--num);flex:none}
+.pc .nm{font:400 24px var(--fun)}.pc .pct{font:400 30px var(--num)}
+.facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:22px}
+.fact{padding:18px 20px}.fact .n{font:400 44px var(--num)}.fact .l{font-size:17px;font-weight:800;margin-top:6px;line-height:1.45}
+/* 裂变 */
+.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.step{padding:20px 18px;text-align:center;position:relative}
+.step .i{font:400 40px var(--num);color:var(--pink);-webkit-text-stroke:2px var(--ink);paint-order:stroke fill}
+.step .t{font:400 26px var(--fun);margin:6px 0}.step .d{font-size:15px;font-weight:700;color:var(--muted);line-height:1.5}
+.step:not(:last-child)::after{content:"→";position:absolute;right:-19px;top:40%;font:400 30px var(--num)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kpi{padding:20px 22px}.kpi .n{font:400 52px var(--num)}.kpi .l{font:400 22px var(--fun);margin-top:6px}.kpi .d{font-size:15px;font-weight:700;color:var(--muted);margin-top:4px;line-height:1.5}
+</style></head><body>
+<section class="fig" id="f1"><div class="k">HUMANBENCH · 회고</div><span class="st">너는 몇B짜리 모델?</span>
+<h1>팔로워 수백, 광고 0원<br><span class="hl">3일</span> 동안 생긴 일</h1>
+<div class="sub">“네가 AI를 연기하는” 드립 테스트. GPT-6 Pro 프로토타입에서 Claude Code로 다시 만들고, 출시하고, 데이터로 고치기까지</div>
+<div class="grid">
+<div class="box cell c1"><div class="n big">~100<small>만</small></div><div class="l">추정 도달 수</div><div class="d">트윗 노출 + 플레이어 공유 이미지 조회</div></div>
+<div class="box cell c2"><div class="n big">3.99<small>만</small></div><div class="l">순 방문자 UV</div><div class="d">페이지 조회 PV 7.8만 회</div></div>
+<div class="box cell c3"><div class="n big">1.27<small>만</small></div><div class="l">76문제 완주</div><div class="d">시작한 사람의 43%</div></div>
+<div class="box cell c4"><div class="n big">1.36<small>만</small></div><div class="l">플레이어 자발적 공유</div><div class="d">공유 카드, 긴 이미지, 도전 링크</div></div>
+<div class="box cell c5"><div class="n big">96</div><div class="l">국가·지역</div><div class="d">7개 언어, 한때 일본이 1위</div></div>
+<div class="box cell c6"><div class="n big">0</div><div class="l">광고 예산</div><div class="d">출발점: 팔로워 수백 명의 X 계정</div></div>
+</div><div class="foot"><span><span class="logo">h_</span><b>humanbench.ybuild.ai</b></span><span>2026.09.27 – 09.29 · @Alex_ybuild</span></div></section><section class="fig" id="f2"><div class="k">FUNNEL</div><h2>100만 도달에서 1.27만 명 완주까지</h2><div class="sub">십몇 분은 걸리는 테스트인데, 시작한 사람 10명 중 4명이 끝까지 갔다</div><div class="fun-row"><div class="fun-n">~1,000,000</div><div><div class="fun-bar" style="width:640.0px;background:var(--purple)">추정 도달</div><div class="fun-note" style="margin-top:6px">트윗 노출 수십만 + 공유 이미지 1.36만 회 노출</div></div></div><div class="fun-row"><div class="fun-n">39,880</div><div><div class="fun-bar" style="width:422.40000000000003px;background:var(--blue)">순 방문자 UV</div><div class="fun-note" style="margin-top:6px">페이지 열람 78,320회</div></div></div><div class="fun-row"><div class="fun-n">29,392</div><div><div class="fun-bar" style="width:332.8px;background:var(--yellow)">풀기 시작</div><div class="fun-note" style="margin-top:6px">방문자의 74%</div></div></div><div class="fun-row"><div class="fun-n">12,654</div><div><div class="fun-bar" style="width:217.60000000000002px;background:var(--green)">76문제 완주</div><div class="fun-note" style="margin-top:6px">시작한 사람의 43% · 총 15,448판</div></div></div><div class="fun-row"><div class="fun-n">7,001</div><div><div class="fun-bar" style="width:153.60000000000002px;background:var(--pink)">완주 후 공유</div><div class="fun-note" style="margin-top:6px">완주자의 55% · 총 13,638회 공유</div></div></div><div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>2026-09-29 11:00 기준</span></div></section><section class="fig" id="f3"><div class="k">TRAFFIC · 시간당 순 방문자</div><h2>트윗 하나로 불붙고, 이틀 만에 다 탔다</h2><div class="sub">분홍은 전체 방문자, 파랑은 일본어 페이지. 둘째 날 아침 일본 출근 시간대가 바통을 받고, 이후 자연 감소</div>
+<div class="box chart"><svg id="hc" width="908" height="430" viewBox="0 0 908 430"></svg></div>
+<div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>09-27 15:00 출시</span></div></section><section class="fig" id="f4"><div class="k">PROMPTS</div><h2>메시지 4개로 프로토타입, 237개로 제품</h2><div class="sub">프롬프트 원문 전부 공개</div>
+<div class="vs"><div class="box"><div class="t">GPT-6 PRO · 1.5시간</div><div class="m">메시지 4개</div><div class="q">“재밌는 앱 아이디어가 있어: 네 파라미터 측정하기”<br>→ 학술풍 프로토타입 v0.2: 528문제, 적응형 평가, 설계 문서</div></div>
+<div class="arrow">→</div><div class="box" style="background:var(--pinks)"><div class="t">CLAUDE CODE · 3일</div><div class="m">237개 · 8,600자</div><div class="q">두 번째 메시지가 “이건 좀 아닌 것 같아”<br>→ 밈 버전 출시·운영: 7개 언어, 데이터 기반 개선, 오픈소스</div></div></div><div class="ph"><span>1. GPT-6 Pro 원형을 밈 버전으로 재구축</span><div class="bar" style="width:71.9298245614035%"></div><span class="num">41</span></div><div class="ph"><span>2. 출시 전 스퍼트: 도메인, 공유 카드, 다국어</span><div class="bar" style="width:28.07017543859649%"></div><span class="num">16</span></div><div class="ph"><span>3. 다듬기: 난이도, 공유 카드, 플랫폼 대응</span><div class="bar" style="width:50.877192982456144%"></div><span class="num">29</span></div><div class="ph"><span>4. 출시 후 데이터: 트래킹, Jev, 번체·프랑스어</span><div class="bar" style="width:100.0%"></div><span class="num">57</span></div><div class="ph"><span>5. 심야: Jev 일괄 스킵, 해외 확산 시도</span><div class="bar" style="width:38.59649122807017%"></div><span class="num">22</span></div><div class="ph"><span>6. 둘째 날: 문제 추가, 배색, 히든, 버그 수정</span><div class="bar" style="width:52.63157894736842%"></div><span class="num">30</span></div><div class="ph"><span>7. 데이터로 개선: 채널, 친구 대결, 보안</span><div class="bar" style="width:54.385964912280706%"></div><span class="num">31</span></div><div class="ph"><span>8. 회고와 오픈소스</span><div class="bar" style="width:19.298245614035086%"></div><span class="num">11</span></div><div class="foot"><span><span class="logo">h_</span><b>github.com/alex-ybuild/humanbench</b></span><span>단계별로 내가 보낸 메시지 수</span></div></section><section class="fig" id="f5"><div class="k">EXPERIMENTS</div><h2>每个改动都用数据验收</h2><div class="sub">有效的留下，没效果的撤掉</div><div class="cards"><div class="box ex"><div class="t">开局题目重排</div><div class="w">把劝退的逻辑题挪走、送分梗题前置</div><div class="ba"><div class="col "><b>54%</b><i style="height:102.85714285714285px"></i><span>重排前</span></div><div class="col good"><b>63%</b><i style="height:120.0px"></i><span>重排后</span></div></div><div class="base"></div><div class="v">过第 15 题的比例<span class="tag ok">有效</span></div></div><div class="box ex"><div class="t">隐藏款人格</div><div class="w">8 种人格之外藏一种，出现率约 3%</div><div class="ba"><div class="col "><b>14.1%</b><i style="height:92.45901639344262px"></i><span>上线前</span></div><div class="col good"><b>18.3%</b><i style="height:120.0px"></i><span>上线后</span></div></div><div class="base"></div><div class="v">答完后 1 小时内再玩一局<span class="tag ok">有效</span></div></div><div class="box ex"><div class="t">英文版改写</div><div class="w">按英文 AI 圈口味整体重写</div><div class="ba"><div class="col "><b>26.8%</b><i style="height:120.0px"></i><span>改写前</span></div><div class="col bad"><b>19.1%</b><i style="height:85.5223880597015px"></i><span>改写后</span></div><div class="col good"><b>25.4%</b><i style="height:113.73134328358208px"></i><span>修正后</span></div></div><div class="base"></div><div class="v">英文玩家答完率<span class="tag mid">先翻车后救回</span></div></div><div class="box ex"><div class="t">提前邀请 Jev 代答</div><div class="w">没耐心的渠道第 4 题就弹邀请</div><div class="ba"><div class="col "><b>26%</b><i style="height:63.673469387755105px"></i><span>用 Jev·前</span></div><div class="col hi"><b>49%</b><i style="height:120.0px"></i><span>用 Jev·后</span></div><div class="col "><b>37.6%</b><i style="height:92.08163265306122px"></i><span>答完·前</span></div><div class="col bad"><b>36.8%</b><i style="height:90.12244897959182px"></i><span>答完·后</span></div></div><div class="base"></div><div class="v">用的人多了，答完的人没多<span class="tag no">已撤回</span></div></div></div><div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>对比均扣除同时段对照组波动</span></div></section><section class="fig" id="f6"><div class="k">WHERE</div><h2>玩家从哪来</h2><div class="sub">独立访客数。大陆用户翻墙会被算到日美港新，真实中文用户比例更高</div><div class="two"><div class="box list"><div class="t">国家和地区（Top 7 / 共 96）</div><div class="row"><span>日本</span><div class="b" style="width:100.0%;background:var(--blue)"></div><span class="v2">13,079</span></div><div class="row"><span>中国大陆</span><div class="b" style="width:91.7271962688279%;background:var(--blue)"></div><span class="v2">11,997</span></div><div class="row"><span>美国</span><div class="b" style="width:38.83324413181436%;background:var(--blue)"></div><span class="v2">5,079</span></div><div class="row"><span>香港</span><div class="b" style="width:18.908173407752887%;background:var(--blue)"></div><span class="v2">2,473</span></div><div class="row"><span>台湾</span><div class="b" style="width:15.238168055661747%;background:var(--blue)"></div><span class="v2">1,993</span></div><div class="row"><span>韩国</span><div class="b" style="width:14.313020873155441%;background:var(--blue)"></div><span class="v2">1,872</span></div><div class="row"><span>新加坡</span><div class="b" style="width:10.482452786910313%;background:var(--blue)"></div><span class="v2">1,371</span></div></div><div><div class="box list"><div class="t">页面语言</div><div class="row"><span>简体中文</span><div class="b" style="width:100.0%;background:var(--yellow)"></div><span class="v2">21,079</span></div><div class="row"><span>日本語</span><div class="b" style="width:49.64182361592106%;background:var(--yellow)"></div><span class="v2">10,464</span></div><div class="row"><span>English</span><div class="b" style="width:33.853598368044025%;background:var(--yellow)"></div><span class="v2">7,136</span></div><div class="row"><span>繁體</span><div class="b" style="width:10.750035580435505%;background:var(--yellow)"></div><span class="v2">2,266</span></div><div class="row"><span>한국어</span><div class="b" style="width:8.861900469661748%;background:var(--yellow)"></div><span class="v2">1,868</span></div><div class="row"><span>ES / FR</span><div class="b" style="width:1.1860145168176859%;background:var(--yellow)"></div><span class="v2">250</span></div></div></div></div><div style="margin-top:24px"><div class="box list"><div class="t">打开方式（有来源记录以来，可重叠）</div><div class="row"><span>朋友挑战链接</span><div class="b" style="width:100.0%;background:var(--pink)"></div><span class="v2">9,877</span></div><div class="row"><span>X / Twitter</span><div class="b" style="width:85.50167054773716%;background:var(--pink)"></div><span class="v2">8,445</span></div><div class="row"><span>QQ</span><div class="b" style="width:42.492659714488205%;background:var(--pink)"></div><span class="v2">4,197</span></div><div class="row"><span>微信</span><div class="b" style="width:42.391414397084134%;background:var(--pink)"></div><span class="v2">4,187</span></div></div></div><div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>7 种语言 · 繁体按台湾 / 香港用词分别审校</span></div></section><section class="fig" id="f7"><div class="k">RESULTS</div><h2>1.27만 명이 받은 결과</h2><div class="sub">가장 많은 건 GPT-5형, 히든 「인간 타입」은 100판에 약 3번</div><div class="pgrid"><div class="box pc"><div class="g" style="background:#1E1E1E">5</div><div><div class="nm">GPT-5형</div><div class="pct">20.3%</div></div></div><div class="box pc"><div class="g" style="background:#7c5cff">X</div><div><div class="nm">Grok형</div><div class="pct">18.6%</div></div></div><div class="box pc"><div class="g" style="background:#10A37F">4o</div><div><div class="nm">GPT-4o형</div><div class="pct">16.5%</div></div></div><div class="box pc"><div class="g" style="background:#4C6FF6">◇</div><div><div class="nm">Gemini형</div><div class="pct">10.5%</div></div></div><div class="box pc"><div class="g" style="background:#D97757">C</div><div><div class="nm">Claude형</div><div class="pct">10.1%</div></div></div><div class="box pc"><div class="g" style="background:#2563EB">K</div><div><div class="nm">Kimi형</div><div class="pct">8.6%</div></div></div><div class="box pc"><div class="g" style="background:#FF9F1C">빅</div><div><div class="nm">빅스비형</div><div class="pct">8.4%</div></div></div><div class="box pc"><div class="g" style="background:#3A55E0">D</div><div><div class="nm">DeepSeek형</div><div class="pct">5.7%</div></div></div><div class="box pc"><div class="g" style="background:#141414">H</div><div><div class="nm">히든: 인간 타입</div><div class="pct">3.2%</div></div></div></div><div class="facts">
+<div class="box fact"><div class="n" style="color:var(--pink)">671B</div><div class="l">가장 흔한 파라미터 수<br>DeepSeek과 같은 크기</div></div>
+<div class="box fact"><div class="n" style="color:var(--green)">103</div><div class="l">명이 전부 정답<br>평균 정답률 67%</div></div>
+<div class="box fact"><div class="n" style="color:var(--blue)">0.29</div><div class="l">한국 플레이어 평균 탈옥당함 횟수<br>다른 지역의 약 절반</div></div>
+</div><div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>인격은 1인당 결과로 중복 제거 · 히든은 도입 후(9/28 10:00~) 판수 기준</span></div></section><section class="fig" id="f8"><div class="k">VIRAL LOOP</div><h2>바이럴은 이렇게 돌았다</h2><div class="sub">트윗은 첫 불씨일 뿐, 그다음은 플레이어끼리 서로 도발한 덕분</div>
+<div class="loop"><div class="box step"><div class="i">01</div><div class="t">완주</div><div class="d">모델 발표회 공유 카드<br>4장 생성</div></div>
+<div class="box step"><div class="i">02</div><div class="t">공유</div><div class="d">완주자의 55%가 공유<br>카드에 QR과 도전 링크</div></div>
+<div class="box step"><div class="i">03</div><div class="t">친구가 열어 봄</div><div class="d">먼저 네 점수를 보고<br>“이 사람을 이길 수 있어?”</div></div>
+<div class="box step"><div class="i">04</div><div class="t">친구 대결</div><div class="d">완주하면 대결 카드 추가<br>진 사람이 복수하러 다시 보냄</div></div></div>
+<div class="kpis"><div class="box kpi"><div class="n" style="color:var(--pink)">40%</div><div class="l">친구 공유로 온 신규 방문자</div><div class="d">피크 시간대 기준, 출시 당일엔 14%</div></div>
+<div class="box kpi"><div class="n" style="color:var(--green)">1.3</div><div class="l">완주자당 신규 방문자</div><div class="d">그중 새로 완주한 사람은 약 0.35명</div></div>
+<div class="box kpi"><div class="n" style="color:var(--blue)">2.3</div><div class="l">일본 완주자당 신규 방문자</div><div class="d">절반 이상이 공유 링크·카드로 들어옴</div></div></div>
+<div class="foot"><span><span class="logo">h_</span><b>너는 몇B짜리 모델?</b></span><span>친구 대결 덕에 도전받은 사람의 공유율이 약 8%p 상승</span></div></section><script>const H=[["09-27 15", 46, 10], ["09-27 16", 1262, 137], ["09-27 17", 2206, 435], ["09-27 18", 1732, 424], ["09-27 19", 1681, 492], ["09-27 20", 1612, 534], ["09-27 21", 2009, 542], ["09-27 22", 2398, 493], ["09-27 23", 2344, 536], ["09-28 00", 1962, 423], ["09-28 01", 1606, 299], ["09-28 02", 1073, 187], ["09-28 03", 715, 144], ["09-28 04", 485, 144], ["09-28 05", 415, 163], ["09-28 06", 651, 321], ["09-28 07", 1085, 497], ["09-28 08", 1465, 594], ["09-28 09", 1649, 505], ["09-28 10", 1848, 521], ["09-28 11", 2156, 590], ["09-28 12", 2063, 656], ["09-28 13", 1836, 503], ["09-28 14", 1797, 451], ["09-28 15", 1706, 459], ["09-28 16", 1401, 374], ["09-28 17", 1204, 306], ["09-28 18", 1018, 247], ["09-28 19", 997, 306], ["09-28 20", 844, 241], ["09-28 21", 765, 202], ["09-28 22", 628, 153], ["09-28 23", 512, 137], ["09-29 00", 423, 74], ["09-29 01", 279, 67], ["09-29 02", 189, 37], ["09-29 03", 106, 22], ["09-29 04", 111, 26], ["09-29 05", 80, 28], ["09-29 06", 137, 64], ["09-29 07", 184, 72], ["09-29 08", 213, 61], ["09-29 09", 303, 73], ["09-29 10", 314, 63], ["09-29 11", 130, 28]];
+const svg=document.getElementById("hc"),W=908,Hh=430,L=58,R=18,T=26,B=58,n=H.length,mx=2600;
+const x=i=>L+i*(W-L-R)/(n-1),y=v=>T+(Hh-T-B)*(1-v/mx);let s="";
+for(const g of [0,500,1000,1500,2000,2500]){s+=`<line x1="${L}" x2="${W-R}" y1="${y(g)}" y2="${y(g)}" stroke="#e3ded1" stroke-dasharray="4 5"/><text x="${L-10}" y="${y(g)+5}" text-anchor="end" font-family="Lilita One" font-size="15" fill="#8a857a">${g}</text>`}
+const pts=H.map((r,i)=>`${x(i)},${y(r[1])}`).join(" ");
+s+=`<polygon points="${L},${y(0)} ${pts} ${x(n-1)},${y(0)}" fill="#FFE1F0"/>`;
+s+=`<polyline points="${pts}" fill="none" stroke="#141414" stroke-width="7" stroke-linejoin="round"/><polyline points="${pts}" fill="none" stroke="#FF7EC3" stroke-width="4" stroke-linejoin="round"/>`;
+s+=`<polyline points="${H.map((r,i)=>`${x(i)},${y(r[2])}`).join(" ")}" fill="none" stroke="#6C9BFF" stroke-width="3.5" stroke-linejoin="round"/>`;
+s+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="#141414" stroke-width="3"/>`;
+H.forEach((r,i)=>{const h=r[0].slice(6);if(h==="00"||h==="12"){s+=`<text x="${x(i)}" y="${y(0)+26}" text-anchor="middle" font-family="Noto Sans KR" font-weight="800" font-size="15" fill="#6b675e">${r[0].slice(0,5).replace("-","/")} ${h}:00</text>`}});
+const pk=H.reduce((a,r,i)=>r[1]>H[a][1]?i:a,0);
+const note=(i,t,dx,dy)=>{const X=x(i),Y=y(H[i][1]),w=[...t].reduce((a,c)=>a+(c.charCodeAt(0)>255?(c.charCodeAt(0)>=0xAC00?18:20):11),0)+22,bx=Math.max(L+4,Math.min(X+dx-w/2,W-R-w)),by=Y+dy;
+s+=`<line x1="${X}" y1="${Y}" x2="${bx+w/2}" y2="${by+17}" stroke="#141414" stroke-width="2.5"/><circle cx="${X}" cy="${Y}" r="7" fill="#FFE14D" stroke="#141414" stroke-width="3"/><rect x="${bx}" y="${by}" width="${w}" height="34" rx="9" fill="#fff" stroke="#141414" stroke-width="2.5"/><text x="${bx+11}" y="${by+24}" font-family="Jua" font-size="20">${t}</text>`};
+note(0,"15:00 출시",70,-70);note(pk,"피크 시간당 2,398",120,-10);
+const jp=H.findIndex(r=>r[0]==="09-28 08");if(jp>0)note(jp,"일본 출근길 바통",-60,-90);
+const nw=H.findIndex(r=>r[0]==="09-28 13");if(nw>0)note(nw,"새 문제 + 친구 대결",90,-70);
+const lw=H.findIndex(r=>r[0]==="09-29 04");if(lw>0)note(lw,"자연 감소",0,-70);
+svg.innerHTML=s;</script></body></html>
